@@ -1,0 +1,8 @@
+<div class="page-header">
+  <h1><%=@city.name%>赛区联赛</h1>
+</div>
+<div class="container">
+<% @tounaments.each do |tournament| %>
+<a href="/teams"><%=tournament.name %></a>
+<% end %>
+</div>

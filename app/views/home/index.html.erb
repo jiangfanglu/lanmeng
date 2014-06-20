@@ -1,0 +1,11 @@
+<div class="page-header">
+  <h1>请选择您的赛区 <small>有兄弟,才有篮球</small></h1>
+</div>
+<% @zones.each do |zone| %>
+<div class="container">
+	<h4><%=zone.name%></h4>
+	<%zone.cities.each do |city|%>
+		<a href="/home/city/<%=city.id%>"><%=city.name%></a>
+	<%end%>
+</div>
+<% end %>

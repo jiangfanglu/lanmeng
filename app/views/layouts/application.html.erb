@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Lanmeng</title>
+  <title><%=t :brand %></title>
   
   <link href="http://cdn.bootcss.com/bootstrap/3.1.1/css/bootstrap-theme.css" rel="stylesheet">
   <link href="http://cdn.bootcss.com/bootstrap/3.1.1/css/bootstrap.css" rel="stylesheet">
@@ -10,12 +10,15 @@
   <script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.js"></script>
   <script src="http://cdn.bootcss.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  
+
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
+<%#=render :partial=>"partials/topbar" %>
+<%=render :partial=>"partials/nav" %>
+<div class="container maincontent">
+	<%= yield %>
+</div>
+<%=render :partial=>"partials/footer" %>
 </body>
 </html>

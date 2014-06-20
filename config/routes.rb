@@ -1,4 +1,6 @@
 Lanmeng::Application.routes.draw do
+  get "tournament/index"
+
   resources :referees
 
 
