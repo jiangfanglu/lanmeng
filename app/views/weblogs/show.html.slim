@@ -1,0 +1,18 @@
+p#notice = notice
+
+p
+  strong Title:
+  = @weblog.title
+p
+  strong Content:
+  = @weblog.content
+p
+  strong User:
+  = @weblog.user_id
+p
+  strong Blog type:
+  = @weblog.blog_type
+
+= link_to 'Edit', edit_weblog_path(@weblog)
+'|
+= link_to 'Back', weblogs_path

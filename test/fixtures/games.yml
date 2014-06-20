@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  team_a_id: 1
+  team_b_id: 1
+  referal_id: 1
+  time: 2014-06-20 11:46:27
+  court_id: 1
+
+two:
+  team_a_id: 1
+  team_b_id: 1
+  referal_id: 1
+  time: 2014-06-20 11:46:27
+  court_id: 1

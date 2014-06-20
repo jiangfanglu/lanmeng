@@ -1,0 +1,24 @@
+= form_for @referee do |f|
+  - if @referee.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@referee.errors.count, "error")} prohibited this referee from being saved:"
+      ul
+        - @referee.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :game_count
+    = f.number_field :game_count
+  .field
+    = f.label :rating
+    = f.number_field :rating
+  .field
+    = f.label :rating_count
+    = f.number_field :rating_count
+  .field
+    = f.label :status
+    = f.number_field :status
+  .actions = f.submit 'Save'

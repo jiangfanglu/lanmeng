@@ -1,0 +1,37 @@
+h1 Listing players
+
+table
+  thead
+    tr
+      th Number
+      th Alias
+      th User
+      th Total score
+      th Total rebound
+      th Total assist
+      th Total block
+      th Total dunk
+      th Total steal
+      th
+      th
+      th
+
+  tbody
+    - @players.each do |player|
+      tr
+        td = player.number
+        td = player.alias
+        td = player.user_id
+        td = player.total_score
+        td = player.total_rebound
+        td = player.total_assist
+        td = player.total_block
+        td = player.total_dunk
+        td = player.total_steal
+        td = link_to 'Show', player
+        td = link_to 'Edit', edit_player_path(player)
+        td = link_to 'Destroy', player, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Player', new_player_path

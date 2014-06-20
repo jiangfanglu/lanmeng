@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  player_id: 1
+  score: 1
+  rebound: 1
+  assist: 1
+  block: 1
+  dunk: 1
+  steal: 1
+
+two:
+  player_id: 1
+  score: 1
+  rebound: 1
+  assist: 1
+  block: 1
+  dunk: 1
+  steal: 1

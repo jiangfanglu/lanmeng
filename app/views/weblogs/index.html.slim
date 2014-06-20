@@ -1,0 +1,27 @@
+h1 Listing weblogs
+
+table
+  thead
+    tr
+      th Title
+      th Content
+      th User
+      th Blog type
+      th
+      th
+      th
+
+  tbody
+    - @weblogs.each do |weblog|
+      tr
+        td = weblog.title
+        td = weblog.content
+        td = weblog.user_id
+        td = weblog.blog_type
+        td = link_to 'Show', weblog
+        td = link_to 'Edit', edit_weblog_path(weblog)
+        td = link_to 'Destroy', weblog, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Weblog', new_weblog_path

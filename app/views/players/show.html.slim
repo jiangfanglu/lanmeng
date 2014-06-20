@@ -1,0 +1,33 @@
+p#notice = notice
+
+p
+  strong Number:
+  = @player.number
+p
+  strong Alias:
+  = @player.alias
+p
+  strong User:
+  = @player.user_id
+p
+  strong Total score:
+  = @player.total_score
+p
+  strong Total rebound:
+  = @player.total_rebound
+p
+  strong Total assist:
+  = @player.total_assist
+p
+  strong Total block:
+  = @player.total_block
+p
+  strong Total dunk:
+  = @player.total_dunk
+p
+  strong Total steal:
+  = @player.total_steal
+
+= link_to 'Edit', edit_player_path(@player)
+'|
+= link_to 'Back', players_path

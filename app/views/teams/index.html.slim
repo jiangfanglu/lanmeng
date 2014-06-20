@@ -1,0 +1,29 @@
+h1 Listing teams
+
+table
+  thead
+    tr
+      th Name
+      th Logo
+      th Description
+      th Member count
+      th Captain player
+      th
+      th
+      th
+
+  tbody
+    - @teams.each do |team|
+      tr
+        td = team.name
+        td = team.logo
+        td = team.description
+        td = team.member_count
+        td = team.captain_player_id
+        td = link_to 'Show', team
+        td = link_to 'Edit', edit_team_path(team)
+        td = link_to 'Destroy', team, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Team', new_team_path

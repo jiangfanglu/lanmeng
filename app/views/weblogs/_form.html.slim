@@ -1,0 +1,21 @@
+= form_for @weblog do |f|
+  - if @weblog.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@weblog.errors.count, "error")} prohibited this weblog from being saved:"
+      ul
+        - @weblog.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :title
+    = f.text_field :title
+  .field
+    = f.label :content
+    = f.text_area :content
+  .field
+    = f.label :user_id
+    = f.number_field :user_id
+  .field
+    = f.label :blog_type
+    = f.number_field :blog_type
+  .actions = f.submit 'Save'
