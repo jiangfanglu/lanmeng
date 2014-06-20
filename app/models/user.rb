@@ -24,4 +24,7 @@ class User < ActiveRecord::Base
     Follow.where("followed_id = ? and follower_id = ?",followed_id, self.id ).exists?
   end
 
+  def create_token
+    self.token = gen_encrypt self.salt
+  end
 end

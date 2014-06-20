@@ -1,0 +1,91 @@
+<%= form_tag({:controller=>'user',:action=>'signin',:rdr=> u(request.original_url)},{:id=>"#{alt}login_form"}) do -%>
+	  <!-- <fieldset style="padding-top:20px;"> -->
+	    <!-- <legend></legend> -->
+
+		<div class="alert alert-danger" id="<%=alt%>login-alert" style="display:none;"></div>
+
+	    <div class="form-group">
+<!-- 	      <label for="email"><%=t :email %></label> -->
+		<div class="input-group">
+			<span class="input-group-addon" style="background:#f7f7f7;border-color:#ddd;color:#999;padding:8px 10px;">
+				<span class="glyphicon glyphicon-user"></span>
+			</span>
+	      <input type="text" class="form-control " id="<%=alt%>si_email" name='email' placeholder="<%=t('email') %>">
+		</div>
+		
+	    </div>
+	    <div class="form-group">
+<!-- 	      <label for="password"><%=t :password %></label> -->
+			<div class="input-group">
+			<span class="input-group-addon" style="background:#f7f7f7;border-color:#ddd;color:#999;padding:8px 10px;">
+				<span class="glyphicon glyphicon-lock"></span>
+			</span>
+	      <input type="password" class="form-control " name='password' id="<%=alt%>si_password" placeholder="<%=t('password') %>">
+		</div>
+	      
+	    </div>
+	    <div class="form-group">
+		    <input type='hidden' id="<%=alt%>pass" value="0" />
+
+		    <a class="btn btn-success btn-block" id="<%=alt%>login_submit_modal_button" style="padding-left:50px;padding-right:50px;">
+		    		<%=t :signin %>
+		    </a>
+	    </div>
+	    <p>
+	    		<%=link_to t('forgot_password'), {:controller=>'home',:action=>'forgot_password'},{:class=>"tagbtn"} %> | 
+	    		<a  href="/user/signup" class="tagbtn">
+		    		<%=t :signup %>
+		    </a>
+	    	</p>
+		    
+<!-- 	  </fieldset> -->
+<% end -%>
+<script type="text/javascript">
+	$("#<%=alt%>login_submit_modal_button").click(function(event){
+		event.preventDefault();
+		nowlogin();
+	});
+	$("#<%=alt%>login_form").keydown(function(event){
+		if(event.which == 13){
+	        event.preventDefault();
+			nowlogin();
+	    }
+	});
+
+	function nowlogin(){
+		$('#<%=alt%>login_submit_modal_button').html('<%=t :checking %>');
+		$.ajax({
+		  type: "POST",
+		  url: '/user/signin',
+		  beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+		  data: {
+		  	email: $('#<%=alt%>si_email').val(),
+		  	password: $('#<%=alt%>si_password').val()
+		  }
+		})
+		.done(function(html){
+			$('#<%=alt%>login_submit_modal_button').html('<%=t :signin %>');
+			if(html=="OK"){
+				window.location.href = "/user";
+			}else{
+				// if(html.match(/<%=t :account_not_activated_cant_use%>/)){
+				// 	$('#<%=alt%>login-alert').html(html);
+				// 	$('#<%=alt%>login-alert').append("<br/><a class='resendactcode' href='#'><%=t :resend_activation_code %></a>");
+				// 	$('#<%=alt%>login-alert').fadeIn('fast');
+				// }else{
+					$('#<%=alt%>login-alert').html(html);
+					$('#<%=alt%>login-alert').fadeIn('fast');
+					setTimeout(function(){
+						$('#<%=alt%>login-alert').fadeOut('fast');
+					},1000);
+				// }
+			}
+		});
+	}
+
+// $(".cntlogin").delegate(".resendactcode", "click", function(){
+// 	window.location.href = "/user/resend_act_code?email="+$("#<%=alt%>si_email").val();
+// });
+
+
+</script>

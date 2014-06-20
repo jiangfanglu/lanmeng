@@ -16,19 +16,6 @@
     <ul class="nav navbar-nav">
       <li class="<%= params[:controller] == 'weblogs' ? 'active' : '' %>"><a href="/weblogs">新公告</a></li>
       <li class="<%= params[:controller] == 'about' ? 'active' : '' %>"><a href="/about">盟规</a></li>
-      <li class="<%= params[:controller] == 'tournament' ? 'active' : '' %> navlink">
-        <% if current_city.blank? %>
-          <a href="/">[选择赛区]</a>
-        <%else%>
-          <a href="/tournament"><%=current_city_name%>赛区联赛</a>
-        <% end %>
-      </li>
-      
-      <% unless current_city.blank? %>
-        <li>
-          <a href="/home?c=1">[切换赛区]</a>
-        </li>
-      <% end %>
       
       <li class="<%= params[:controller] == 'teams' ? 'active' : '' %>"><a href="/teams">球队</a></li>
 <!--       <li class="dropdown">
@@ -51,7 +38,33 @@
       <button type="submit" class="btn btn-default">Submit</button>
     </form> -->
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="#">登录</a></li>
+     
+        <%if current_user %>
+         <li>
+          <a href="/user"><%=current_user.username %></a>
+        </li>
+           <li>
+          <a href="/user/signout">登出</a>
+          </li>
+        <%else%>
+         <li>
+          <a href="/user/login">登录</a>
+          </li>
+        <%end%>
+      
+      <li class=" navlink">
+        <% if current_city.blank? %>
+          <a href="/">[选择赛区]</a>
+        <%else%>
+          <a href="/tournament"><%=current_city_name%>赛区联赛</a>
+        <% end %>
+      </li>
+      
+      <% unless current_city.blank? %>
+        <li>
+          <a href="/home?c=1">[切换赛区]</a>
+        </li>
+      <% end %>
 <!--       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
         <ul class="dropdown-menu">

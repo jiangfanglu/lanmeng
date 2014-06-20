@@ -9,4 +9,9 @@ class HomeController < ApplicationController
   	set_user_city params[:id]
   	redirect_to controller: :tournament
   end
+
+  def tournament
+  	set_user_tournament params[:id]
+  	redirect_to controller: :teams
+  end
 end

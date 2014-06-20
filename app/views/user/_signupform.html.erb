@@ -1,0 +1,154 @@
+<div class="alert hide" id="signupformalert">
+  <div class="container alerttext"><%=t :missing_input %></div>
+</div>
+<%= form_tag({:controller=>'user',:action=>'create'},{:id=>'signup_form',:method=>"post"}) do -%>
+<div class="form-group">
+	<label><%=t('username') %></label>
+  <input type="text" class="form-control " id="username" name="post[username]" placeholder="<%=t('enter')+t('username') %>" data-task="checkemail" />
+  <span class="input-icon hide"><span class="glyphicon" style="color:red;"></span></span>
+</div>
+
+<div class="form-group">
+	<label><%=t('email') %></label>
+  <input type="text" class="form-control " id="email" name="post[email]" placeholder="<%=t('enter')+t('email') %>" data-task="checkemail" />
+  <span class="input-icon hide"><span class="glyphicon" style="color:red;"></span></span>
+</div>
+
+<div class="form-group">
+	<label><%=t('password') %></label>
+  <input type="password" class="form-control " id="post_password" name="post[password]" placeholder="<%=t('enter')+t('password') %>" />
+  <span class="input-icon hide"><span class="glyphicon" style="color:red;"></span></span>
+</div>
+<div class="form-group">
+	<label><%=t('retype_password') %></label>
+  <input type="password" class="form-control " id="retype_password" name="post[retype_password]" placeholder="<%=t('retype_password') %>" />
+  <span class="input-icon hide"><span class="glyphicon" style="color:red;"></span></span>
+</div>
+
+<div class="checkbox_1">
+  <label class="" for="term_check">
+    <input type="checkbox" value="" id="term_check" name="post[term_check]">
+  </label>
+  <%=t :i_have_carefully_read_and_agree %>
+  	<a href="#" class="important_link termandcondition" ><%=t('term_and_cond')%></a>
+    <%=t :and_ %>
+    <a href="#" class="important_link privacyplocy" ><%=t('privacy_policy')%></a>
+</div>
+
+<div class="form-group" style="padding-top:10px;">
+	<input type='hidden' id="pass" data-email="0" data-password="0" data-passwordrtype="0" />
+    <button type="submit" class="btn btn-sm btn-success btn-block"><%=t :signup %></button>
+</div>
+<div class="form-group">
+		<%=t :already_registered %> <%=link_to t('signin'), {:controller=>'user',:action=>'login'},{:class=>"tagbtn"} %>
+</div>
+<% end -%>
+<script>
+	$(".termandcondition").click(function(){
+		var obj = $(this);
+	    $('#modal').removeData('bs.modal');
+		$('#modal').modal({
+		        show: true,
+		        remote: '/docs/termsandconditions'
+		});
+	});
+	$(".privacyplocy").click(function(){
+		var obj = $(this);
+	    $('#modal').removeData('bs.modal');
+		$('#modal').modal({
+		        show: true,
+		        remote: '/docs/privacy'
+		});
+	});
+	$('#retype_password').blur(function(){
+		if($(this).val() != $('#post_password').val()){
+			showalert('<%=t :password_not_match %>');
+			shownotok($(this));
+			$('#pass').data('passwordrtype','1');
+		}else{
+			showok($(this));
+			$('#pass').data('passwordrtype','0');
+		}
+	});
+	$('#post_password').blur(function(){
+		if($(this).val().length < 6 || $(this).val().length > 16){
+			showalert('<%=t :password_requirement %>');
+			shownotok($(this));
+			$('#pass').data('password','1');
+		}else{
+			showok($(this));
+			$('#pass').data('password','0');
+		}
+	});
+	$('#email').blur(function(){
+		var email = $(this).val();
+		var obj = $(this);
+	    $.ajax({
+	       url: '/user/checkemail?email=' + email,
+	       success: function(responseData) {
+		      if(responseData=="OK"){
+		      	showalert('<%=t :email_exists %>');
+				$('#pass').data('email','1');
+				shownotok(obj);
+			  }else{
+				var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+				if (filter.test(email)) {
+					$('#pass').data('email','0');
+					showok(obj);
+				}else{
+					showalert('<%=t :email_format_not_valid %>');
+				    $('#pass').data('email','1');
+				    shownotok(obj);
+				}						
+				
+			}
+	       }
+	    });
+	});
+	$("#term_check").click(function(){
+		if($('#term_check').prop('checked')){
+			if(!$("#signupformalert").hasClass('hide')){
+				$("#signupformalert").addClass('hide');
+			}
+		}
+	});
+
+	$('#signup_form').submit(function(event){
+		if($('#pass').data('email')=='1' || $('#pass').data('password')=='1' || $('#pass').data('passwordrtype')=='1'){
+			showalert('<%=t :signup_information_error %>');
+			event.preventDefault();
+		}
+		if(!$('#term_check').prop('checked')){
+			showalert('<%=t :must_agree_on_terms %>');
+			event.preventDefault();
+		}
+		if($('#post_password').val()=="" || $('#retype_password').val()=="" || $('#email').val()==""){
+			event.preventDefault();
+			showalert('<%=t :missing_input %>');
+		}
+	});
+
+	$(".close").click(function(){
+		$("#signupformalert").addClass('hide');
+	});
+	var showalert = function(msg){
+		$("#signupformalert").removeClass('hide');
+		$("#signupformalert").children(".alerttext").html(msg);
+	}
+
+	var showok = function(obj){
+		if(!$("#signupformalert").hasClass('hide')){
+			$("#signupformalert").addClass('hide');
+		}
+		obj.siblings('.input-icon').removeClass('hide');
+		obj.siblings('.input-icon').children('.glyphicon').removeClass("glyphicon-remove").addClass("glyphicon-ok");
+		//obj.siblings('.glyphicon').removeClass('hide').removeClass("glyphicon-remove").addClass("glyphicon-ok");
+	}
+	var shownotok = function(obj){
+		obj.siblings('.input-icon').removeClass('hide');
+		obj.siblings('.input-icon').children('.glyphicon').removeClass("glyphicon-ok").addClass("glyphicon-remove");
+		//obj.siblings('.glyphicon').removeClass('hide').removeClass("glyphicon-ok").addClass("glyphicon-remove");
+	}
+	// $(':checkbox').checkbox('toggle');
+	
+</script>
