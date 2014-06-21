@@ -27,4 +27,8 @@ class User < ActiveRecord::Base
   def create_token
     self.token = gen_encrypt self.salt
   end
+
+  def is_player?
+    !self.player.blank?
+  end
 end

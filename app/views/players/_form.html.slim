@@ -7,30 +7,24 @@
           li = message
 
   .field
-    = f.label :number
-    = f.number_field :number
+    = f.label t('preferred_player_number')
+    = f.text_field :number, :class=>"form-control"
   .field
-    = f.label :alias
-    = f.text_field :alias
+    = f.label t('player_alias')
+    = f.text_field :alias, :class=>"form-control"
   .field
-    = f.label :user_id
-    = f.number_field :user_id
+    = f.hidden_field :user_id, :value=>current_user.id
   .field
-    = f.label :total_score
-    = f.number_field :total_score
+    = f.hidden_field :total_score, :value=>0
   .field
-    = f.label :total_rebound
-    = f.number_field :total_rebound
+    = f.hidden_field :total_rebound, :value=>0
   .field
-    = f.label :total_assist
-    = f.number_field :total_assist
+    = f.hidden_field :total_assist, :value=>0
   .field
-    = f.label :total_block
-    = f.number_field :total_block
+    = f.hidden_field :total_block, :value=>0
   .field
-    = f.label :total_dunk
-    = f.number_field :total_dunk
+    = f.hidden_field :total_dunk, :value=>0
   .field
-    = f.label :total_steal
-    = f.number_field :total_steal
-  .actions = f.submit 'Save'
+    = f.hidden_field :total_steal, :value=>0
+  
+  .actions = f.submit t('save'), :class=>'btn btn-default'

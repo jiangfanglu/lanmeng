@@ -144,4 +144,31 @@ module ApplicationHelper
 	        return false
 	      end
 	  end
+
+	  def upload_image_basic(f, filename, foldername)
+	    tmp = f.tempfile
+	    ext = File.extname(f.original_filename)
+
+	    basic_file_name = "#{filename}#{ext}".downcase
+
+	    #image = MiniMagick::Image.open(tmp.path)
+
+	    # PUT files to Aliyun OSS code here start
+	    	store_aliyunoss_fail = false
+    		begin
+	      response = Aliyun::OSS::OSSObject.store(
+	        "#{foldername}#{basic_file_name}",
+	        open(tmp.path),
+	        BUCKET_NAME)
+	    rescue Aliyun::OSS::ResponseError => error
+	      puts "#{error.code}:#{error.message}"
+	    end
+
+	    if not response.success?
+	      store_aliyunoss_fail = true
+	    end
+	    # Aliyun OSS code finish
+
+	    return store_aliyunoss_fail, basic_file_name
+	  end
 end

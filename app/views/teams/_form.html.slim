@@ -7,18 +7,17 @@
           li = message
 
   .field
-    = f.label :name
-    = f.text_field :name
+    label 队名
+    = f.text_field :name,:class=>"form-control"
   .field
-    = f.label :logo
-    = f.text_field :logo
+    label 队标
+    = f.file_field :logo
+    p 请上传长宽比例 1:1 的图片
   .field
-    = f.label :description
-    = f.text_area :description
+    label 球队简介
+    = f.text_area :description,:class=>"form-control", :rows=>"8"
   .field
-    = f.label :member_count
-    = f.number_field :member_count
+    = f.hidden_field :member_count, :value=>0
   .field
-    = f.label :captain_player_id
-    = f.number_field :captain_player_id
-  .actions = f.submit 'Save'
+    = f.hidden_field :captain_player_id, :value=>current_user.player.id
+  .actions = f.submit t('save'), :class=>"btn btn-default"

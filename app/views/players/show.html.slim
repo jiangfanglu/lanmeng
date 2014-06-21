@@ -1,33 +1,45 @@
 p#notice = notice
 
-p
-  strong Number:
-  = @player.number
-p
-  strong Alias:
-  = @player.alias
-p
-  strong User:
-  = @player.user_id
-p
-  strong Total score:
-  = @player.total_score
-p
-  strong Total rebound:
-  = @player.total_rebound
-p
-  strong Total assist:
-  = @player.total_assist
-p
-  strong Total block:
-  = @player.total_block
-p
-  strong Total dunk:
-  = @player.total_dunk
-p
-  strong Total steal:
-  = @player.total_steal
+div class="row"
+  div class="col-lg-2 stats text-center"
+    h6 
+      = t('total_score')
+    = @player.total_score
+  div class="col-lg-2 stats text-center"
+    h6 
+      = t :total_rebound
+    = @player.total_rebound
+  div class="col-lg-2 stats text-center"
+    h6 
+      = t('total_assist')
+    = @player.total_assist
+  div class="col-lg-2 stats text-center"
+    h6 
+      = t('total_block')
+    = @player.total_block
+  div class="col-lg-2 stats text-center"
+    h6 
+      = t('total_dunk')
+    = @player.total_dunk
+  div class="col-lg-2 stats text-center"
+    h6 
+      = t('total_steal')
+    = @player.total_steal
 
-= link_to 'Edit', edit_player_path(@player)
-'|
-= link_to 'Back', players_path
+div class="row" style="margin:10px 0px;"
+  div class="col-lg-6 stats text-center"
+    h3 球衣号码
+    p class="large"
+      = @player.number
+  div class="col-lg-6 stats text-center"
+    h3 球员昵称
+    p class="large"
+      = @player.alias
+
+
+- if current_user
+  - if current_user.player.id == params[:id].to_i
+
+    = link_to t('edit'), edit_player_path(@player), :class=>"btn btn-default"
+    //'|
+    //= link_to 'Back', players_path

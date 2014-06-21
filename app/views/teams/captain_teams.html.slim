@@ -1,0 +1,20 @@
+= @team.name
+
+- if @team.players.size < 1
+	div class="page-header" 
+		h3 您还没有球员. 需要招募吗?
+
+	p 输入需要招募人的QQ号,每输入一个后单击回车
+	input class='tagsinput' rows='2' name="invited" id="invited" value=''
+	br
+	button type='submit' class='btn btn-default'
+		| 邀请
+
+- @team.players.each do |player|
+	= player.name
+
+
+javascript:
+	$('#invited').tagsInput({
+		'defaultText':'添加一个QQ号,然后回车'
+	});

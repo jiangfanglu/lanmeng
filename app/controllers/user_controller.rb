@@ -1,7 +1,9 @@
 class UserController < ApplicationController
 	include ApplicationHelper
+	#layout 'user'
 	before_filter :allowed, :only => [:login, :signup]
 	def index
+
 	end
 
 	def allowed
@@ -9,8 +11,10 @@ class UserController < ApplicationController
 	end
 
 	def login
+		render :layout => "application"
 	end
 	def signup
+		render :layout => "application"
 	end
 
 	def checkemail

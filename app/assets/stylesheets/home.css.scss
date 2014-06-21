@@ -18,3 +18,25 @@
 		  border-radius: 6px;
 	}
 }
+.footer{
+	width:100%;
+	border-top:1px solid #ddd;
+	margin-top:20px;
+	padding-top:10px;
+	background:#f7f7f7;
+}
+.footerlist{
+	padding:0px;
+	li{
+		list-style:none;
+	}
+}
+.stats{
+    padding-top:10px;
+    padding-bottom: 10px;
+    color:#333;
+    border: 1px solid #eee;
+    margin-left:-1px;
+    h6{font-weight:bold;}
+}
+p.large{font-size:18px;color:#999;}

@@ -1,4 +1,5 @@
 class PlayersController < ApplicationController
+  include ApplicationHelper
   # GET /players
   # GET /players.json
   def index
@@ -16,7 +17,7 @@ class PlayersController < ApplicationController
     @player = Player.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html {render layout: 'user' if current_user.player.id == params[:id].to_i if current_user }
       format.json { render json: @player }
     end
   end
@@ -34,7 +35,8 @@ class PlayersController < ApplicationController
 
   # GET /players/1/edit
   def edit
-    @player = Player.find(params[:id])
+    @player = Player.find(current_user.player.id)
+    render layout: 'user'
   end
 
   # POST /players
