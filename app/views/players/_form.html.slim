@@ -13,6 +13,9 @@
     = f.label t('player_alias')
     = f.text_field :alias, :class=>"form-control"
   .field
+    p 球员简介: 请描述你打的位置,特长,以及以前曾或得的荣誉等等
+    = f.text_area :profile, :class=>"form-control", :rows=>"8"
+  .field
     = f.hidden_field :user_id, :value=>current_user.id
   .field
     = f.hidden_field :total_score, :value=>0

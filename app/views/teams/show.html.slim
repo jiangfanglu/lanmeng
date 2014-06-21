@@ -19,3 +19,11 @@ p
 = link_to 'Edit', edit_team_path(@team)
 '|
 = link_to 'Back', teams_path
+
+- if current_user
+  - if @team.applied?(current_user.id)
+    = link_to "已申请", {action: "apply_to_join", id: params[:id] }, {:class=>"btn btn-warning disabled"}
+  - else
+    = link_to "申请加入该队", {action: "apply_to_join", id: params[:id] }, {:class=>"btn btn-warning"}
+- else
+  = link_to "申请加入该队", {action: "apply_to_join", id: params[:id] }, {:class=>"btn btn-warning"}

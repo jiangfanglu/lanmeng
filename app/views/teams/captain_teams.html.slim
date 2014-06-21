@@ -15,7 +15,7 @@ div class="row" style="border-bottom:1px dashed #ddd;padding-bottom:10px;margin-
 	div class="page-header" 
 		h4 您还没有球员. 需要招募吗?
 
-	form action="/" method='post'
+	form action="/teams/invite" method='post'
 		p 输入需要招募人的QQ号,每输入一个后单击回车
 		input class='tagsinput' rows='2' name="invited" id="invited" value=''
 		br
@@ -25,7 +25,10 @@ div class="row" style="border-bottom:1px dashed #ddd;padding-bottom:10px;margin-
 	div class="page-header" 
 		h4 您球队的队员
 	- @team.players.each do |player|
-		= player.name
+		div class="thumbnail"
+			== render :partial => "players/avartar", :locals => {:user_id=>player.user.id, :player_id=>player.id}
+			div class="caption"
+				= player.alias
 
 - unless @team.players.size >= MAX_TEAM_MEMBER
 	div class="page-header" 
@@ -38,9 +41,9 @@ div class="row" style="border-bottom:1px dashed #ddd;padding-bottom:10px;margin-
 		- @applications.each do |application|
 			div class="col-lg-2"
 				div class="thumbnail"
-					== image_tag "", class: "img-responsive"
+					== render :partial => "players/avartar", :locals => {:user_id=>application.applicant_user_id, :player_id=>application.user.player.id}
 					div class="caption"
-						 = application.user.player.alias
+						= application.user.player.alias
 
 
 javascript:

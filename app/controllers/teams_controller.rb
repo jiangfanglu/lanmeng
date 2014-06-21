@@ -104,4 +104,18 @@ class TeamsController < ApplicationController
 
     render layout: 'user'
   end
+
+  def invite
+  end
+
+  def apply_to_join
+    @team_application = TeamApplication.new(
+        applicant_user_id: current_user.id,
+        applied_team_id: params[:id],
+        status: 0
+      )
+    if @team_application.save
+      render text: 'ok'
+    end
+  end
 end

@@ -1,5 +1,5 @@
 class Player < ActiveRecord::Base
-  attr_accessible :alias, :number, :total_assist, :total_block, :total_dunk, :total_rebound, :total_score, :total_steal, :user_id
+  attr_accessible :alias, :number, :total_assist,:profile, :total_block, :total_dunk, :total_rebound, :total_score, :total_steal, :user_id
 
   validates_format_of :number, :with => /\d+/
   validates_presence_of :number

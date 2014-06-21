@@ -14,4 +14,8 @@ class Team < ActiveRecord::Base
   has_many :players, through: :player_teams
 
   has_many :team_applications, foreign_key: :applied_team_id
+
+  def applied? user_id
+    TeamApplication.where("applicant_user_id =? and applied_team_id = ?",user_id, self.id ).count > 0
+  end
 end

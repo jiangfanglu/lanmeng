@@ -36,6 +36,12 @@ div class="row" style="margin:10px 0px;"
     p class="large"
       = @player.alias
 
+div class="page-header"
+  h5 球员简介
+p 
+  = @player.profile
+
+br
 
 - if current_user
   - if current_user.player.id == params[:id].to_i
