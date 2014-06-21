@@ -171,4 +171,46 @@ module ApplicationHelper
 
 	    return store_aliyunoss_fail, basic_file_name
 	  end
+
+	  def gen_avartar(file,sel_width, sel_height,sel_x, sel_y,  actual_width, standard_avartar_width, file_url)
+  		require 'fileutils'
+
+	    image = MiniMagick::Image.open(file)
+	    w = image[:width]
+	    h = image[:height]
+
+	    scale_ratio = w.to_f/actual_width.to_f
+
+	    save_x = sel_x*scale_ratio
+	    save_y = sel_y*scale_ratio
+	    save_width = sel_width*scale_ratio
+	    save_height = sel_height*scale_ratio
+
+	    p "#{sel_width}x#{sel_width}+#{sel_x}+#{sel_y}"
+	    p "#{save_width}x#{save_height}+#{save_x}+#{save_y}"
+
+	    image.crop("#{save_width}x#{save_height}+#{save_x}+#{save_y}")
+
+	    if params[:width].to_i > standard_avartar_width
+	      image.resize "#{standard_avartar_width}x#{standard_avartar_width}"
+	    end
+	    file_path = file
+	    image.write(file_path)
+
+	    begin
+	      response = Aliyun::OSS::OSSObject.store(
+	        file_url,
+	        open(file_path),
+	        BUCKET_NAME)
+	    rescue Aliyun::OSS::ResponseError => error
+	      puts "#{error.code}:#{error.message}"
+	    end
+
+	    if response.success?
+	      FileUtils.rm file_path
+	      return true
+	    else
+	      return false
+	    end
+	  end
 end

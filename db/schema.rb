@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140620073503) do
+ActiveRecord::Schema.define(:version => 20140621124803) do
 
   create_table "cities", :force => true do |t|
     t.string   "name"
@@ -34,6 +34,13 @@ ActiveRecord::Schema.define(:version => 20140620073503) do
     t.string   "longitude"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "follows", :force => true do |t|
+    t.integer  "followed_id"
+    t.integer  "follower_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "game_stats", :force => true do |t|
@@ -103,6 +110,14 @@ ActiveRecord::Schema.define(:version => 20140620073503) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.integer  "user_id"
+  end
+
+  create_table "team_applications", :force => true do |t|
+    t.integer  "applicant_user_id"
+    t.integer  "applied_team_id"
+    t.integer  "status"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
   end
 
   create_table "team_stats", :force => true do |t|

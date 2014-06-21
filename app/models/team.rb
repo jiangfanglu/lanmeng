@@ -12,4 +12,6 @@ class Team < ActiveRecord::Base
 
   has_many :player_teams, foreign_key: :team_id
   has_many :players, through: :player_teams
+
+  has_many :team_applications, foreign_key: :applied_team_id
 end

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  applicant_user_id: 1
+  applied_team_id: 1
+  status: 1
+
+two:
+  applicant_user_id: 1
+  applied_team_id: 1
+  status: 1

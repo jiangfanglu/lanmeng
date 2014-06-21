@@ -36,6 +36,8 @@ class TeamsController < ApplicationController
   # GET /teams/1/edit
   def edit
     @team = Team.find(params[:id])
+    redirect_to '/user' if @team.captain_player_id != current_user.player.id
+    render layout: 'user'
   end
 
   # POST /teams
@@ -96,7 +98,10 @@ class TeamsController < ApplicationController
   end
 
   def captain_teams
-    @team = Team.find_by_captain_player_id current_user.player.id
+    @team = Team.includes(:players).find_by_captain_player_id current_user.player.id
+
+    @applications = TeamApplication.includes(:user).where("applied_team_id = ?",@team.id )
+
     render layout: 'user'
   end
 end

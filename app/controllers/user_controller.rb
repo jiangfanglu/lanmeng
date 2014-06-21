@@ -2,6 +2,7 @@ class UserController < ApplicationController
 	include ApplicationHelper
 	#layout 'user'
 	before_filter :allowed, :only => [:login, :signup]
+	skip_before_filter :verify_authenticity_token, :only => [:create]
 	def index
 
 	end
@@ -132,4 +133,60 @@ class UserController < ApplicationController
 	        end 
 	    end
 	end
+
+	def upload_thumbnail_image
+	end
+
+	def cropthumbnail
+		#require 'fileutils'
+
+	    tmp = params[:thumbnail].tempfile
+	    ext = File.extname(params[:thumbnail].original_filename)
+
+	    file = File.join(TEMPORARY_FILE_FOLDER, "usr-#{params[:id]}#{ext}".downcase)
+	    FileUtils.cp tmp.path, file
+	    #img = Magick::Image.read( file )
+
+	    image = MiniMagick::Image.open(file)
+	    w = image[:width].to_f
+	    h = image[:height].to_f
+	    ratio = w/h
+
+	    if w >= 600
+	      image.resize "600x#{((600/ratio).to_i).to_s}"
+	      image.write file
+	    end
+
+	    session[:tmp_thumb_image] = {
+	      :file=> file, 
+	      :filename=>"usr-#{params[:id]}#{ext}".downcase, 
+	      :dimension=>{
+	        :width=>600,
+	        :height=>(600/ratio).to_i
+	        }}
+	 end
+
+	def crop_image
+	    if gen_avartar(session[:tmp_thumb_image][:file], 
+	        params[:width].to_i,
+	        params[:height].to_i,
+	        params[:x].to_i,
+	        params[:y].to_i,
+	        params[:actual_width].to_i,
+	        150,
+	        "#{USER_FOLDER}#{session[:tmp_thumb_image][:filename]}")
+
+	        session[:tmp_thumb_image] = nil
+	        user = User.find(current_user.id)
+	        user.thumbnail = 1
+	        begin
+	          user.save!
+	        rescue Exception => exception
+	          puts exception.message
+	        end
+	        render :text=>"OK",:layout=>false
+	    else
+	        render :text=>"Transfer failed",:layout=>false  
+	    end
+	  end
 end

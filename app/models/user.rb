@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   belongs_to :user_group
   has_many :weblogs, foreign_key: :user_id
 
+  has_many :team_applications, foreign_key: :applicant_user_id
+
   # has_many :follows, foreign_key: :followed_id
   # has_many :fans, through: :follows
 

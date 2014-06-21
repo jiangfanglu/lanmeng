@@ -1,20 +1,51 @@
-= @team.name
-
+div class="row" style="border-bottom:1px dashed #ddd;padding-bottom:10px;margin-bottom:10px;"
+	div class="col-lg-2"
+		== render :partial => "teams/logo", :locals => {:team_id=>@team.id, :team_logo=>@team.logo}	
+	div class="col-lg-8"
+		h3
+			= @team.name
+		p 
+			| 现有队员: 
+			= @team.member_count
+		p style="color:#999;"
+			= @team.description
+	div class="col-lg-2" style="padding-top:20px;"
+		= link_to t('edit'), edit_team_path(@team), :class=>"btn btn-default btn-sm"
 - if @team.players.size < 1
 	div class="page-header" 
-		h3 您还没有球员. 需要招募吗?
+		h4 您还没有球员. 需要招募吗?
 
-	p 输入需要招募人的QQ号,每输入一个后单击回车
-	input class='tagsinput' rows='2' name="invited" id="invited" value=''
-	br
-	button type='submit' class='btn btn-default'
-		| 邀请
+	form action="/" method='post'
+		p 输入需要招募人的QQ号,每输入一个后单击回车
+		input class='tagsinput' rows='2' name="invited" id="invited" value=''
+		br
+		button type='submit' class='btn btn-info'
+			| 邀请
+- else
+	div class="page-header" 
+		h4 您球队的队员
+	- @team.players.each do |player|
+		= player.name
 
-- @team.players.each do |player|
-	= player.name
+- unless @team.players.size >= MAX_TEAM_MEMBER
+	div class="page-header" 
+		h4 申请加入您队伍的球员
+
+	- if @applications.size < 1
+		| 还没有人申请加入, 快多多动员你的小伙伴们加入吧!
+	- else
+		div class="row"
+		- @applications.each do |application|
+			div class="col-lg-2"
+				div class="thumbnail"
+					== image_tag "", class: "img-responsive"
+					div class="caption"
+						 = application.user.player.alias
 
 
 javascript:
 	$('#invited').tagsInput({
-		'defaultText':'添加一个QQ号,然后回车'
+		'defaultText':'添加一个QQ号,然后回车',
+		'width':'600px',
+		'height':'70px'
 	});
