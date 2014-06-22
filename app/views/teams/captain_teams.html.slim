@@ -1,4 +1,4 @@
-div class="row" style="border-bottom:1px dashed #ddd;padding-bottom:10px;margin-bottom:10px;"
+div class="row" style="padding-bottom:10px;margin-bottom:10px;"
 	div class="col-lg-2"
 		== render :partial => "teams/logo", :locals => {:team_id=>@team.id, :team_logo=>@team.logo}	
 	div class="col-lg-8"
@@ -16,7 +16,22 @@ div class="row" style="border-bottom:1px dashed #ddd;padding-bottom:10px;margin-
 		= link_to "选择联赛", "/tournament/join", :class=>"btn btn-default btn-sm"
 
 
-div class="page-header" 
+div class="btn-group"
+  a href="#team_members" class="btn btn-default"
+  	| 您球队的队员 (
+  	= @team.players.size
+  	| )
+  - if @team.member_count < 12
+  	a href="#team_recruit" class="btn btn-default"
+  		| 招募队员
+  - unless @team.players.size >= MAX_TEAM_MEMBER
+	a href="#team_application" class="btn btn-default"
+	  	| 入队申请 (
+	  	= @applications.size 
+	  	| )
+
+
+div class="page-header" id="team_members"
 	h4 您球队的队员
 div class="row"
 	- @team.players.each do |player|
@@ -34,9 +49,9 @@ div class="row"
 						= link_to "删除该队员", {:action=>"remove_player",:id=>"#{Time.new.to_i}_#{@team.id}_#{player.id}"}, {:class=>"btn btn-xs btn-default remove_player"}
 
 
-- if @team.players.size < 1 || (@team.players.size==1 && @team.players.first.id == current_user.player.id)
-	div class="page-header" 
-		h4 您还没有其他球员. 需要招募吗?
+- if @team.member_count < 12
+	div class="page-header" id="team_recruit"
+		h4 您的球队还没有满员. 需要招募吗?
 
 	form action="/teams/invite" method='post'
 		p 输入需要招募人的QQ号,每输入一个后单击回车
@@ -46,7 +61,7 @@ div class="row"
 			| 邀请
 
 - unless @team.players.size >= MAX_TEAM_MEMBER
-	div class="page-header" 
+	div class="page-header" id="team_application"
 		h4 申请加入您队伍的球员
 
 	- if @applications.size < 1
@@ -62,6 +77,9 @@ div class="row"
 						br
 						br
 						= link_to "同意加入", {:action=>"confirm_join",:id=>"#{Time.new.to_i}_#{@team.id}_#{application.user.player.id}_#{application.id}"}, {:class=>"btn btn-xs btn-default confirm_join"}
+						br
+						br
+						= link_to "拒绝加入", {:action=>"refuse_application",:id=>"#{Time.new.to_i}_#{@team.id}_#{application.user.player.id}_#{application.id}"}, {:class=>"btn btn-xs btn-danger confirm_join"}
 
 
 javascript:

@@ -18,4 +18,8 @@ class Team < ActiveRecord::Base
   def applied? user_id
     TeamApplication.where("applicant_user_id =? and applied_team_id = ?",user_id, self.id ).count > 0
   end
+
+  def joined? player_id
+    PlayerTeam.where("player_id =? and team_id = ?",player_id, self.id ).count > 0
+  end
 end

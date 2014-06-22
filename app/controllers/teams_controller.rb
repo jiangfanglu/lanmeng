@@ -108,7 +108,7 @@ class TeamsController < ApplicationController
   def captain_teams
     @team = Team.includes(:players).find_by_captain_player_id current_user.player.id
 
-    @applications = TeamApplication.includes(:user).where("applied_team_id = ?",@team.id )
+    @applications = TeamApplication.includes(:user).where("applied_team_id = ? and status = 0",@team.id )
 
     render layout: 'user'
   end
@@ -129,6 +129,14 @@ class TeamsController < ApplicationController
 
       redirect_to :action => "captain_teams", :id=>0 if @team.save
     end
+  end
+
+  def refuse_application
+
+      @ta = TeamApplication.find params[:id].split("_")[3].to_i
+      @ta.status = -1
+
+      redirect_to :action => "captain_teams", :id=>0 if @ta.save
   end
 
   def remove_player
