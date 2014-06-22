@@ -11,9 +11,32 @@ div class="row" style="border-bottom:1px dashed #ddd;padding-bottom:10px;margin-
 			= @team.description
 	div class="col-lg-2" style="padding-top:20px;"
 		= link_to t('edit'), edit_team_path(@team), :class=>"btn btn-default btn-sm"
-- if @team.players.size < 1
+		br
+		br
+		= link_to "选择联赛", "/tournament/join", :class=>"btn btn-default btn-sm"
+
+
+div class="page-header" 
+	h4 您球队的队员
+div class="row"
+	- @team.players.each do |player|
+		div class="col-lg-2"
+			div class="thumbnail"
+				== render :partial => "players/avartar", :locals => {:user_id=>player.user.id, :player_id=>player.id}
+				div class="caption text-center"
+					= player.alias
+					br
+					br
+					- if player.id == @team.captain_player_id
+						span style="color:red;" 
+							| 队长
+					- else
+						= link_to "删除该队员", {:action=>"remove_player",:id=>"#{Time.new.to_i}_#{@team.id}_#{player.id}"}, {:class=>"btn btn-xs btn-default remove_player"}
+
+
+- if @team.players.size < 1 || (@team.players.size==1 && @team.players.first.id == current_user.player.id)
 	div class="page-header" 
-		h4 您还没有球员. 需要招募吗?
+		h4 您还没有其他球员. 需要招募吗?
 
 	form action="/teams/invite" method='post'
 		p 输入需要招募人的QQ号,每输入一个后单击回车
@@ -21,14 +44,6 @@ div class="row" style="border-bottom:1px dashed #ddd;padding-bottom:10px;margin-
 		br
 		button type='submit' class='btn btn-info'
 			| 邀请
-- else
-	div class="page-header" 
-		h4 您球队的队员
-	- @team.players.each do |player|
-		div class="thumbnail"
-			== render :partial => "players/avartar", :locals => {:user_id=>player.user.id, :player_id=>player.id}
-			div class="caption"
-				= player.alias
 
 - unless @team.players.size >= MAX_TEAM_MEMBER
 	div class="page-header" 
@@ -42,8 +57,11 @@ div class="row" style="border-bottom:1px dashed #ddd;padding-bottom:10px;margin-
 			div class="col-lg-2"
 				div class="thumbnail"
 					== render :partial => "players/avartar", :locals => {:user_id=>application.applicant_user_id, :player_id=>application.user.player.id}
-					div class="caption"
+					div class="caption text-center"
 						= application.user.player.alias
+						br
+						br
+						= link_to "同意加入", {:action=>"confirm_join",:id=>"#{Time.new.to_i}_#{@team.id}_#{application.user.player.id}_#{application.id}"}, {:class=>"btn btn-xs btn-default confirm_join"}
 
 
 javascript:
@@ -51,4 +69,18 @@ javascript:
 		'defaultText':'添加一个QQ号,然后回车',
 		'width':'600px',
 		'height':'70px'
+	});
+	$(".confirm_join").click(function(){
+		if(confirm("确认同意?")){
+				return true;
+			}else{
+				return false;
+			}
+	});
+	$(".remove_player").click(function(){
+		if(confirm("确认删除?操作不可修复")){
+				return true;
+			}else{
+				return false;
+			}
 	});

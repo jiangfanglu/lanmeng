@@ -57,7 +57,14 @@ class TeamsController < ApplicationController
         filename = Time.new.to_f.to_s.gsub(".","")
         uploaded = upload_image_basic(params[:team]['logo'], filename, foldername)
 
-        @team.logo = uploaded[1] and @team.save unless uploaded[0]
+        @player_team = PlayerTeam.new(
+            player_id: current_user.player.id,
+            team_id: @team.id
+          )
+        @team.member_count += 1 if @player_team.save
+        @team.logo = uploaded[1]
+        
+        @team.save unless uploaded[0]
 
         format.html { redirect_to @team, notice: t('successfully_created_team') }
         format.json { render json: @team, status: :created, location: @team }
@@ -76,6 +83,7 @@ class TeamsController < ApplicationController
 
     respond_to do |format|
       if @team.update_attributes(params[:team])
+
         format.html { redirect_to @team, notice: t('successfully_updated_team') }
         format.json { head :no_content }
       else
@@ -106,6 +114,28 @@ class TeamsController < ApplicationController
   end
 
   def invite
+  end
+
+  def confirm_join
+    @player_team = PlayerTeam.new(
+        player_id: params[:id].split("_")[2].to_i,
+        team_id: params[:id].split("_")[1].to_i
+      )
+    if @player_team.save
+      TeamApplication.destroy params[:id].split("_")[3].to_i
+
+      @team = Team.find params[:id].split("_")[1].to_i
+      @team.member_count += 1
+
+      redirect_to :action => "captain_teams", :id=>0 if @team.save
+    end
+  end
+
+  def remove_player
+    PlayerTeam.destroy_all(["player_id = ? and team_id = ?",params[:id].split("_")[2], params[:id].split("_")[1]])
+    @team = Team.find params[:id].split("_")[1].to_i
+    @team.member_count -= 1
+    redirect_to :action => "captain_teams", :id=>0 if @team.save
   end
 
   def apply_to_join
