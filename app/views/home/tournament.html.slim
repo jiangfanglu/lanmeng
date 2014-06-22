@@ -1,0 +1,8 @@
+div class="page-header"
+	h4 
+		= @tournamet.name
+		| 球队
+
+- @teams.each do |team|
+	div class="col-lg-2"
+		== render :partial => "teams/logo", :locals => {:team_id=>team.id, :team_logo=>team.logo}	

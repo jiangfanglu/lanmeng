@@ -11,7 +11,9 @@ class HomeController < ApplicationController
   end
 
   def tournament
-  	set_user_tournament params[:id]
-  	redirect_to controller: :teams
+     @tournamet = Tournament.find params[:id]
+  	   @teams = Team.joins(:tournaments).where("tournaments.id = ?", params[:id])
+      #set_user_tournament params[:id]
+  	  #redirect_to controller: :teams
   end
 end

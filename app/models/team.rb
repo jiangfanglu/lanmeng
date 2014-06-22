@@ -6,7 +6,7 @@ class Team < ActiveRecord::Base
   validates_presence_of :logo
 
   has_many :team_tournaments, foreign_key: :team_id
-  has_many :tournaments, through: :court_tournaments
+  has_many :tournaments, through: :team_tournaments
 
   has_one :team_stat, foreign_key: :team_id
 
@@ -21,5 +21,9 @@ class Team < ActiveRecord::Base
 
   def joined? player_id
     PlayerTeam.where("player_id =? and team_id = ?",player_id, self.id ).count > 0
+  end
+
+  def joined_tournament?
+    TeamTournament.where("team_id = ?", self.id).count > 0
   end
 end

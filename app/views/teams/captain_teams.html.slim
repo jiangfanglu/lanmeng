@@ -7,13 +7,21 @@ div class="row" style="padding-bottom:10px;margin-bottom:10px;"
 		p 
 			| 现有队员: 
 			= @team.member_count
+		- if @team.joined_tournament?
+			p
+				| 所在赛区:
+				= link_to "#{@team.tournaments.first.city.name}分区", controller: "tournament" 
+				| , 
+				= link_to @team.tournaments.first.name, controller: "home", action: "tournament", id: @team.tournaments.first.id
 		p style="color:#999;"
 			= @team.description
 	div class="col-lg-2" style="padding-top:20px;"
 		= link_to t('edit'), edit_team_path(@team), :class=>"btn btn-default btn-sm"
 		br
 		br
-		= link_to "选择联赛", "/tournament/join", :class=>"btn btn-default btn-sm"
+		- unless @team.joined_tournament?
+			= link_to "选择联赛", "/tournament/select", :class=>"btn btn-default btn-sm"
+			
 
 
 div class="btn-group"
