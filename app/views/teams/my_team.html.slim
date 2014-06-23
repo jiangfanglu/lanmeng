@@ -1,0 +1,43 @@
+div class="row"
+	div class="col-lg-6"
+		div class="page-header"
+			h3 
+				= @team.name
+
+		p 
+			| 所属联赛: 
+			= link_to @team.tournaments.first.name, controller: "home", action: "tournament", id: @team.tournaments.first.id
+
+		div class="btn-group"
+		  button class="btn btn-default"
+		  	| 胜场 
+		  	= @team.team_stat.win
+		  button  class="btn btn-default"
+		  	| 负场 
+		  	= @team.team_stat.lose
+		br
+		br
+		p 
+			| 球队介绍: 
+			= @team.description
+
+		div class="page-header"
+			h4 队员 
+
+		div class="row"
+			- @team.players.each do |player|
+				div class="col-lg-4"
+						div class="thumbnail"
+							== render :partial => "players/avartar", :locals => {:user_id=>player.user.id, :player_id=>player.id}
+							div class="caption text-center"
+								= player.alias
+
+	div class="col-lg-6"
+		
+		div class="panel panel-default"
+			div class="panel-heading"
+      			h4 class="panel-title"
+      				| 球队公告
+			div class="panel-content" style="padding:10px;"
+      			== render :partial => "weblogs/blogs", :locals => { :weblogs => @weblogs }
+		

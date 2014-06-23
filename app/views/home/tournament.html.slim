@@ -1,8 +1,23 @@
-div class="page-header"
-	h4 
-		= @tournamet.name
-		| 球队
+div class="row"
+	div class="col-lg-9"
+		div class="page-header"
+			h4 最新公告
 
-- @teams.each do |team|
-	div class="col-lg-2"
-		== render :partial => "teams/logo", :locals => {:team_id=>team.id, :team_logo=>team.logo}	
+		div class="page-header"
+			h4 
+				= @tournamet.name
+				| 场馆
+
+
+		div class="page-header"
+			h4 
+				= @tournamet.name
+				| 球队
+
+		- @teams.each do |team|
+			div class="col-lg-2"
+				== render :partial => "teams/logo", :locals => {:team_id=>team.id, :team_logo=>team.logo}	
+
+	div class="col-lg-3"
+		div class="page-header"
+			h4 赛程表

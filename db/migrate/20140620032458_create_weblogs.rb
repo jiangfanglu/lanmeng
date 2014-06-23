@@ -4,7 +4,7 @@ class CreateWeblogs < ActiveRecord::Migration
       t.string :title
       t.text :content
       t.integer :user_id
-      t.integer :blog_type
+      t.string :blog_type
 
       t.timestamps
     end

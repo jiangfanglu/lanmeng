@@ -66,6 +66,12 @@ class TeamsController < ApplicationController
         
         @team.save unless uploaded[0]
 
+        @team_stat = TeamStat.new(
+            team_id: @team.id,
+            win: 0,
+            lose: 0
+          )
+
         format.html { redirect_to @team, notice: t('successfully_created_team') }
         format.json { render json: @team, status: :created, location: @team }
       else
@@ -109,6 +115,8 @@ class TeamsController < ApplicationController
     @team = Team.includes(:players).find_by_captain_player_id current_user.player.id
 
     @applications = TeamApplication.includes(:user).where("applied_team_id = ? and status = 0",@team.id )
+
+    @weblog = Weblog.new
 
     render layout: 'user'
   end
@@ -155,5 +163,12 @@ class TeamsController < ApplicationController
     if @team_application.save
       render text: 'ok'
     end
+  end
+
+  def my_team
+    @team = current_user.player.teams.includes(:team_stat).includes(:tournaments).first
+    @captain = Player.find @team.captain_player_id
+    @weblogs = Weblog.where("user_id = ? and blog_type = 'T' ", @captain.user_id).order("created_at desc").limit(30)
+    render layout: 'user'
   end
 end

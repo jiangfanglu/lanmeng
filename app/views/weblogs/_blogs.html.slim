@@ -1,0 +1,10 @@
+ul class="media-list"
+	- weblogs.each do |weblog|
+		li class="media"
+			div class="media-body"
+				h4 class="media-heading"
+					= weblog.title
+				p style="color:#999;"
+					= weblog.created_at.strftime("%Y-%m-%d %H:%M:%S")
+				p = weblog.content
+	

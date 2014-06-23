@@ -25,18 +25,22 @@ div class="row" style="padding-bottom:10px;margin-bottom:10px;"
 
 
 div class="btn-group"
-  a href="#team_members" class="btn btn-default"
-  	| 您球队的队员 (
-  	= @team.players.size
-  	| )
-  - if @team.member_count < 12
-  	a href="#team_recruit" class="btn btn-default"
-  		| 招募队员
-  - unless @team.players.size >= MAX_TEAM_MEMBER
-	a href="#team_application" class="btn btn-default"
-	  	| 入队申请 (
-	  	= @applications.size 
+  	a href="#team_members" class="btn btn-default"
+	  	| 您球队的队员 (
+	  	= @team.players.size
 	  	| )
+	- if @team.member_count < 12
+	  	a href="#team_recruit" class="btn btn-default"
+	  		| 招募队员
+  	- unless @team.players.size >= MAX_TEAM_MEMBER
+		a href="#team_application" class="btn btn-default"
+	  		| 入队申请 (
+	  		= @applications.size 
+	  		| )
+   	a href="#team_blog" class="btn btn-default"
+  		| 发布球队公告
+
+	  	
 
 
 div class="page-header" id="team_members"
@@ -88,6 +92,12 @@ div class="row"
 						br
 						br
 						= link_to "拒绝加入", {:action=>"refuse_application",:id=>"#{Time.new.to_i}_#{@team.id}_#{application.user.player.id}_#{application.id}"}, {:class=>"btn btn-xs btn-danger confirm_join"}
+
+div class="page-header" id="team_members"
+	h4 发布球队公告
+div class="row" id="team_blog"
+	div class="col-lg-12"
+		== render 'weblogs/formteam'
 
 
 javascript:
