@@ -3,6 +3,6 @@
 </div>
 <div class="container">
 <% @tounaments.each do |tournament| %>
-<a href="/home/tournament/<%=tournament.id%>"><%=tournament.name %></a>
+<a href="/home/tournament/<%=tournament.id%>" class="btn btn-lg btn-default"><%=tournament.name %></a>
 <% end %>
 </div>

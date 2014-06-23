@@ -26,7 +26,7 @@ div class="row"
 
 		div class="row"
 			- @team.players.each do |player|
-				div class="col-lg-4"
+				div class="col-lg-4 col-md-4 col-sm-4 col-xs-6"
 						div class="thumbnail"
 							== render :partial => "players/avartar", :locals => {:user_id=>player.user.id, :player_id=>player.id}
 							div class="caption text-center"

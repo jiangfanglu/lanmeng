@@ -1,29 +1,45 @@
-p#notice = notice
+ol class="breadcrumb"
+  li
+    = link_to @team.tournaments.first.name, controller: "home", action: "tournament", id: @team.tournaments.first.id
+  li class="active"
+    = @team.name
 
-p
-  strong Name:
-  = @team.name
-p
-  strong Logo:
-  = @team.logo
-p
-  strong Description:
-  = @team.description
-p
-  strong Member count:
-  = @team.member_count
-p
-  strong Captain player:
-  = @team.captain_player_id
+div class="row"
+  div class="col-lg-9"
+    div class="page-header"
+      h3 
+        = @team.name
+    p 
+      | 球队介绍: 
+      = @team.description
+  div class="col-lg-3 text-center"
 
-= link_to 'Edit', edit_team_path(@team)
-'|
-= link_to 'Back', teams_path
+    div class="btn-group"
+      button class="btn btn-default"
+        | 胜场 
+        = @team.team_stat.win
+      button  class="btn btn-default"
+        | 负场 
+        = @team.team_stat.lose
+    br
+    br
+    - if current_user
+      - if @team.applied?(current_user.id)
+        = link_to "已申请", {action: "apply_to_join", id: params[:id] }, {:class=>"btn btn-warning disabled"}
+      - elsif @team.joined?(current_user.player.id)
+        = link_to "已加入", {action: "apply_to_join", id: params[:id] }, {:class=>"btn btn-warning disabled"}
+      - elsif @team.member_count >= MAX_TEAM_MEMBER
+        = link_to "已满员", {action: "apply_to_join", id: params[:id] }, {:class=>"btn btn-warning disabled"}
+      - else
+        = link_to "申请加入该队", {action: "apply_to_join", id: params[:id] }, {:class=>"btn btn-warning"}
 
-- if current_user
-  - if @team.applied?(current_user.id)
-    = link_to "已申请", {action: "apply_to_join", id: params[:id] }, {:class=>"btn btn-warning disabled"}
-  - elsif @team.joined?(current_user.player.id)
-    = link_to "已加入", {action: "apply_to_join", id: params[:id] }, {:class=>"btn btn-warning disabled"}
-  - else
-    = link_to "申请加入该队", {action: "apply_to_join", id: params[:id] }, {:class=>"btn btn-warning"}
+div class="page-header"
+  h4 队员 
+
+div class="row"
+  - @team.players.each do |player|
+    div class="col-lg-2"
+        div class="thumbnail"
+          == render :partial => "players/avartar", :locals => {:user_id=>player.user.id, :player_id=>player.id}
+          div class="caption text-center"
+            = player.alias
