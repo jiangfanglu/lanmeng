@@ -3,7 +3,7 @@ div class="row"
 		div class="page-header"
 			h4 最新公告
 		== render :partial => "weblogs/blogs", :locals => { :weblogs => @weblogs }
-	div class="col-lg-6"
+	div class="col-lg-3"
 
 		div class="page-header"
 			h4 
@@ -17,6 +17,7 @@ div class="row"
 					br
 					| 地址: 
 					= court.location
+					br
 
 		div class="page-header"
 			h4 
@@ -24,7 +25,7 @@ div class="row"
 				| 球队
 
 		- @teams.each do |team|
-			div class="col-lg-3"
+			div class="col-lg-4"
 				== render :partial => "teams/logo", :locals => {:team_id=>team.id, :team_logo=>team.logo}	
 
 	div class="col-lg-3"
@@ -33,6 +34,7 @@ div class="row"
 
 		== render partial: 'tournament/gamelist', :locals => { :games => @games }
 
+	div class="col-lg-3"
 		div class="page-header"
 			h4 球队积分
 

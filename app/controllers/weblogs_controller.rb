@@ -44,7 +44,7 @@ class WeblogsController < ApplicationController
 
     respond_to do |format|
       if @weblog.save
-        format.html { redirect_to @weblog, notice: 'Weblog was successfully created.' }
+        format.html { redirect_to controller: 'teams', action: 'my_team', id: 0, notice: 'Weblog was successfully created.' }
         format.json { render json: @weblog, status: :created, location: @weblog }
       else
         format.html { render action: "new" }
