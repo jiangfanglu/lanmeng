@@ -1,2 +1,16 @@
-== render :partial => "user/avartar", :locals => {:user_id=>current_user.id}
-= link_to '上传头像', :action=>"upload_thumbnail_image"
+div class="row"
+	div class="col-lg-2"
+		== render :partial => "user/avartar", :locals => {:user_id=>current_user.id}
+		= link_to '上传头像', {:action=>"upload_thumbnail_image"},{:class=>"btn btn-default btn-xs"}
+
+	div class="col-lg-10"
+		p 
+			| 姓名:
+			= current_user.name
+		p 
+			| 昵称:
+			= current_user.username
+
+
+div class="page-header"
+	h5 我关注的用户

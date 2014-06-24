@@ -1,2 +1,19 @@
-h1 Home#index
-p Find me in app/views/home/index.html.slim
+- unless !current_city.blank? && params[:c].blank?
+	div class="page-header"
+		h1 请选择您的赛区 
+			small 有兄弟,才有篮球
+	- @zones.each do |zone|
+		div class="container"
+			h4
+				=zone.name
+			- zone.cities.each do |city|
+				= link_to city.name, controller: 'home', action: 'city', id: city.id
+
+- else
+	div class="row"
+		div class="col-lg-3"
+			div class="page-header"
+				h5 news
+			== render :partial => "weblogs/blogs", :locals => { :weblogs => @weblogs }
+		div class="col-lg-9"
+

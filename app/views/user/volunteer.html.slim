@@ -1,0 +1,31 @@
+div class="page-header"
+	h4 成为我们的志愿者
+div class="row"
+	div class="col-lg-6"
+		- if !current_user.is_referee?
+			button id="be_referee" class="btn btn-lg btn-default"
+				| 成为裁判
+		- else
+			button class="btn btn-lg btn-default disabled"
+				| 您已经是裁判
+
+		br
+		br
+
+		== form_tag action: "/user/join_referee/0", method: "post"
+			div class="form-group  hide" id="referee_form"
+				label 选择赛区
+				== select("post", "tournament_id", @city.tournaments.collect {|t| [ "#{t.name}", t.id ] }, {},{:class => 'form-control',:id=>'wpost_tournament_id'})
+				br
+				button type="submit" class="btn btn-default"
+					| 提交
+
+	div class="col-lg-6"
+		= link_to "成为比赛协调人", {controller: "user", action: "join_courtprovider",id: 0},{class: "btn btn-lg btn-default disabled"}
+		br
+		| 该任务尚未完成建设,请耐心等待
+
+javascript:
+	$("#be_referee").click(function(){
+		$("#referee_form").removeClass("hide");
+	});

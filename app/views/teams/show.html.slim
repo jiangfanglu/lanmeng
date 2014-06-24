@@ -26,6 +26,8 @@ div class="row"
     - if current_user
       - if @team.applied?(current_user.id)
         = link_to "已申请", {action: "apply_to_join", id: params[:id] }, {:class=>"btn btn-warning disabled"}
+      - elsif current_user.player.blank?
+        = link_to "想加入? 注册成为球员吧", {controller: 'players', action: "new", id: params[:id] }, {:class=>"btn btn-warning"}
       - elsif @team.joined?(current_user.player.id)
         = link_to "已加入", {action: "apply_to_join", id: params[:id] }, {:class=>"btn btn-warning disabled"}
       - elsif @team.member_count >= MAX_TEAM_MEMBER

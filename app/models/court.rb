@@ -4,5 +4,5 @@ class Court < ActiveRecord::Base
   has_many :court_tournaments, foreign_key: :court_id
   has_many :tournaments, through: :court_tournaments
 
-  has_many :games, foreign_key: :game_id
+  has_many :games, foreign_key: :court_id
 end

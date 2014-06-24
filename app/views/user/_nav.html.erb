@@ -12,5 +12,9 @@
 <%else%>
  <li class=" <%= 'active' if params[:controller] == "players" && params[:action] == 'new' %>"><a href="/players/new">成为球员</a></li>
 <%end%>
-<li class=" <%= 'active' if params[:controller] == "" && params[:action] == '' %>"><a href="">我的资料</a></li>
+<li class=" <%= 'active' if params[:controller] == "" && params[:action] == '' %>"><a href="/user/edit/0">我的资料</a></li>
+<% if current_user.is_referee? %>
+<li class=" <%= 'active' if params[:controller] == "user" && params[:action] == 'referee' %>"><a href="/user/referee/0">我的执法日程</a></li>
+<% end %>
+<li class=" <%= 'active' if params[:controller] == "user" && params[:action] == 'volunteer' %>"><a href="/user/volunteer/0">我要当志愿者</a></li>
 </ul>

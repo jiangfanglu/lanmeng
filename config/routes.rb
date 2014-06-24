@@ -12,6 +12,8 @@ Lanmeng::Application.routes.draw do
 
   resources :teams
 
+  resources :user
+
 
   get "home/index"
 

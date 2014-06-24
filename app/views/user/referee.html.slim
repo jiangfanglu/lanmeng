@@ -1,0 +1,6 @@
+div class="page-header"
+	h4 我的执法日程表
+- if @games.size < 1
+	p 暂没有任何比赛
+- else
+	== render partial: 'tournament/gamelist', :locals => { :games => @games }

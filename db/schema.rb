@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140621162058) do
+ActiveRecord::Schema.define(:version => 20140624034758) do
 
   create_table "cities", :force => true do |t|
     t.string   "name"
@@ -108,9 +108,10 @@ ActiveRecord::Schema.define(:version => 20140621162058) do
     t.integer  "rating"
     t.integer  "rating_count"
     t.integer  "status"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.integer  "user_id"
+    t.integer  "tournament_id"
   end
 
   create_table "team_applications", :force => true do |t|
@@ -186,9 +187,10 @@ ActiveRecord::Schema.define(:version => 20140621162058) do
     t.string   "title"
     t.text     "content"
     t.integer  "user_id"
-    t.integer  "blog_type"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "blog_type",     :limit => 1
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.integer  "tournament_id"
   end
 
   create_table "zones", :force => true do |t|

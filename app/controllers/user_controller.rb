@@ -7,6 +7,53 @@ class UserController < ApplicationController
 
 	end
 
+	def show
+	end
+
+	def volunteer
+		@city = City.includes(:tournaments).find current_city
+	end
+
+	def referee
+		@games = Game.where("referal_id = ? and time >= ?", current_user.referee.id, Time.now).order("created_at desc")
+	end
+
+	def join_referee
+		@referee = Referee.new(
+			name: current_user.name,
+			game_count: 0,
+			rating: 0,
+			rating_count: 0,
+			status: 1,
+			user_id: current_user.id,
+			tournament_id: params[:post][:tournament_id].to_i
+		)
+		@referee.save
+
+		@tournament = Tournament.find params[:post][:tournament_id].to_i
+		render :layout=>"user"
+	end
+
+	def edit
+		@user = User.find(current_user.id)
+    		render layout: 'user'
+	end
+
+	def update
+		@user = User.find(params[:id])
+
+	    respond_to do |format|
+	      if @user.update_attributes(params[:user])
+
+	        format.html { redirect_to '/user', notice: t('successfully_updated_team') }
+	        format.json { head :no_content }
+	      else
+	        format.html { render action: "edit" }
+	        format.json { render json: @team.errors, status: :unprocessable_entity }
+	      end
+	    end
+	end
+
 	def allowed
 		redirect_to :controller=>"user" if current_user
 	end

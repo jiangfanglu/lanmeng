@@ -11,4 +11,6 @@ class Tournament < ActiveRecord::Base
 
   has_many :game_tournaments, foreign_key: :tournament_id
   has_many :games, through: :game_tournaments
+
+  has_many :referees, foreign_key: :tournament_id
 end

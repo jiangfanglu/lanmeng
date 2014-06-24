@@ -14,7 +14,7 @@
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
-      <li class="<%= params[:controller] == 'weblogs' ? 'active' : '' %>"><a href="/weblogs">首页</a></li>
+      <li class="<%= params[:controller] == 'weblogs' ? 'active' : '' %>"><a href="/">首页</a></li>
 <!--       <li class="<%#= params[:controller] == 'weblogs' ? 'active' : '' %>"><a href="/weblogs">新公告</a></li> -->
       <li class="<%= params[:controller] == 'about' ? 'active' : '' %>"><a href="/about">盟规</a></li>
       
@@ -62,7 +62,11 @@
            
             
             <li class="divider"></li>
-            <li><a href="">我的资料</a></li>
+            <li><a href="/user/edit/0">我的资料</a></li>
+            <% if current_user.is_referee? %>
+            <li><a href="/user/referee/0">我的执法日程</a></li>
+            <% end %>
+            <li><a href="/user/volunteer/0">我要当志愿者</a></li>
             <li><a href="/user/signout">登出</a></li>
           </ul>
         </li>

@@ -13,9 +13,12 @@
     = f.label :content
     = f.text_area :content
   .field
-    = f.label :user_id
-    = f.number_field :user_id
+    = f.hidden_field :user_id, :value=>0
   .field
     = f.label :blog_type
-    = f.number_field :blog_type
+    select name="weblog[blog_type]" id="weblog_blog_type"
+      option value="G"
+        | 全站公告
+      option value="Z"
+        | 赛区公告
   .actions = f.submit 'Save'

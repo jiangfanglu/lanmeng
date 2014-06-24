@@ -22,6 +22,10 @@ class User < ActiveRecord::Base
     self.user_group.name
   end
 
+  def is_referee?
+    !self.referee.blank?
+  end
+
   def followed? followed_id
     Follow.where("followed_id = ? and follower_id = ?",followed_id, self.id ).exists?
   end

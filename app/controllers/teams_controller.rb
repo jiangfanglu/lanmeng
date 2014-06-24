@@ -28,7 +28,7 @@ class TeamsController < ApplicationController
     @team = Team.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render layout: 'user' }
       format.json { render json: @team }
     end
   end
@@ -71,8 +71,9 @@ class TeamsController < ApplicationController
             win: 0,
             lose: 0
           )
+        @team_stat.save
 
-        format.html { redirect_to @team, notice: t('successfully_created_team') }
+        format.html { redirect_to action: 'captain_teams', id: 0 , notice: t('successfully_created_team') }
         format.json { render json: @team, status: :created, location: @team }
       else
         format.html { render action: "new" }
@@ -161,14 +162,16 @@ class TeamsController < ApplicationController
         status: 0
       )
     if @team_application.save
-      render text: 'ok'
+      render controller: 'teams', action: "my_team", id: 0
     end
   end
 
   def my_team
     @team = current_user.player.teams.includes(:team_stat).includes(:tournaments).first
-    @captain = Player.find @team.captain_player_id
-    @weblogs = Weblog.where("user_id = ? and blog_type = 'T' ", @captain.user_id).order("created_at desc").limit(30)
+    unless @team.blank?
+      @captain = Player.find @team.captain_player_id
+      @weblogs = Weblog.where("user_id = ? and blog_type = 'T' ", @captain.user_id).order("created_at desc").limit(30)
+    end
     render layout: 'user'
   end
 end

@@ -10,6 +10,8 @@ class Team < ActiveRecord::Base
 
   has_one :team_stat, foreign_key: :team_id
 
+  has_many :games
+
   has_many :player_teams, foreign_key: :team_id
   has_many :players, through: :player_teams
 
