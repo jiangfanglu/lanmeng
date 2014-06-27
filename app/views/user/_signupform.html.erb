@@ -84,7 +84,7 @@
 		var email = $(this).val();
 		var obj = $(this);
 	    $.ajax({
-	       url: '/user/checkemail?email=' + email,
+	       url: '/user/checkemail/0?email=' + email,
 	       success: function(responseData) {
 		      if(responseData=="OK"){
 		      	showalert('<%=t :email_exists %>');

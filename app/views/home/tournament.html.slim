@@ -38,6 +38,9 @@ div class="row"
 		div class="page-header"
 			h4 球队积分
 
+		p
+			= link_to "比赛数据", controller: "tournament", action: "game_stats", id: params[:id]
+
 		table class="table table-striped"
 			tr
 				td class="text-center"
