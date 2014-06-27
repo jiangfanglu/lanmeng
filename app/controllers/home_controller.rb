@@ -29,4 +29,10 @@ class HomeController < ApplicationController
       #set_user_tournament params[:id]
   	  #redirect_to controller: :teams
   end
+
+  def apply_to_provide_court
+  end
+
+  def recruit
+  end
 end
