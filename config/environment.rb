@@ -10,7 +10,7 @@ MEIDIA_SERVER = "http://oss.aliyuncs.com"
 MAX_TEAM_MEMBER = 12
 TEMPORARY_FILE_FOLDER = "public/uploaded"
 USER_FOLDER = "user/"
-SITE_ROOT = 'http://localhost:3001'
+SITE_ROOT = 'http://localhost:3000'
 
 # Initialize the rails application
 Lanmeng::Application.initialize!

@@ -1,10 +1,14 @@
 class HomeController < ApplicationController
   include ApplicationHelper
   def index
-  	#redirect_to :controller=>"weblogs" if !current_city.blank? && params[:c].blank?
+  	   unless current_city.blank?
+        redirect_to :controller=>"user", :action=>"login",:id=>0 if !current_user && params[:c].blank?
+        redirect_to :controller=>"tournament" if current_user && params[:c].blank?
+     end
+
   	   @zones = Zone.includes(:cities).all
 
-    @weblogs = Weblog.where("blog_type = 'G'").order("created_at desc")
+    # @weblogs = Weblog.where("blog_type = 'G'").order("created_at desc")
   end
 
   def city

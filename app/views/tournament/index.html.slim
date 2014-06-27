@@ -1,0 +1,19 @@
+div class="row"
+	div class="col-lg-9"
+		div class="page-header"
+			h1
+				=@city.name
+		  		| 赛区联赛
+
+		- @tounaments.each do |tournament| 
+			a href="/home/tournament/#{tournament.id}" class="btn btn-lg btn-default"
+				= tournament.name
+			| &nbsp;
+
+
+
+	div class="col-lg-3"
+		div class="page-header"
+			h5 公告
+		== render :partial => "weblogs/blogs", :locals => { :weblogs => @weblogs }
+		

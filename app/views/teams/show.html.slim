@@ -34,6 +34,8 @@ div class="row"
         = link_to "已满员", {action: "apply_to_join", id: params[:id] }, {:class=>"btn btn-warning disabled"}
       - else
         = link_to "申请加入该队", {action: "apply_to_join", id: params[:id] }, {:class=>"btn btn-warning"}
+    - else
+      = link_to "申请加入该队", {:controller=>"user", action: "login", id: 0 }, {:class=>"btn btn-warning"}
 
 div class="page-header"
   h4 队员 

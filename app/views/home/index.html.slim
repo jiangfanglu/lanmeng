@@ -6,7 +6,8 @@
 			h4
 				=zone.name
 			- zone.cities.each do |city|
-				= link_to city.name, controller: 'home', action: 'city', id: city.id
+				= link_to city.name, {controller: 'home', action: 'city', id: city.id},{class: "btn btn-default btn-lg"}
+				| &nbsp;
 
 - else
 	div class="row"

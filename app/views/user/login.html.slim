@@ -1,0 +1,9 @@
+div class="row"
+	div class="col-lg-8"  style="padding:60px 40px;"
+		== render :partial=>"about/about"
+
+	div class="col-lg-4" style="padding:40px;"
+		div class="page-header"
+			h3 欢迎回来
+		
+		== render :partial=>"loginform", :locals=>{:alt=>"d"}

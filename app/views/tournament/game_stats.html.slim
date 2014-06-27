@@ -4,85 +4,88 @@ ol class="breadcrumb"
   li class="active"
     | 比赛数据
 
-div class="row"
-	div class="col-lg-2"
-		ul class="nav nav-pills nav-stacked"
-			- @games.each do |game|
-				li
-					a href="/tournament/game_stats/#{params[:id]}?gid=#{game.id}"
-						= game.team_a.name
-						| &nbsp;vs&nbsp;
-						= game.team_b.name
-						br
-						= game.time.strftime("%y-%m-%d %H:%M")
+- if @games.size > 0
 
-	div class="col-lg-10"
+	div class="row"
+		div class="col-lg-2"
+			ul class="nav nav-pills nav-stacked"
+				- @games.each do |game|
+					li
+						a href="/tournament/game_stats/#{params[:id]}?gid=#{game.id}"
+							= game.team_a.name
+							| &nbsp;vs&nbsp;
+							= game.team_b.name
+							br
+							= game.time.strftime("%y-%m-%d %H:%M")
 
-		div class="row" style="padding:10px;"
-			div class="col-lg-6"
-				h4
-					= @game.team_a.name 
-					| :
-					= @game.game_stats[0].score
-			div class="col-lg-6"
-				h4
-					= @game.team_b.name 
-					| : 
-					= @game.game_stats[1].score
+		div class="col-lg-10"
 
-		div class="page-header"
-			h4 球员数据
+			div class="row" style="padding:10px;"
+				div class="col-lg-4"
+					h2 = @game.team_a.name 
+				div class="col-lg-4 text-center"
+					h2 
+						= @game.game_stats[0].score
+						| &nbsp;:&nbsp;
+						= @game.game_stats[1].score
+				div class="col-lg-4 text-right"
+					h2 = @game.team_b.name 
 
-		div class="panel panel-default"
-			div class="panel-heading"
-					h4 class="panel-title"
-						= @game.team_a.name
-			div class="panel-content" style="padding:10px;"
-				table class="table"
-					tr
-						th 球员号码
-						th 球员姓名
-						th 得分
-						th 篮板
-						th 助攻
-						th 盖帽
-						th 抢断
-						th 灌篮
-					- @player_game_stats_team_a.each do |player_stat|
+			div class="page-header"
+				h4 球员数据
 
+			div class="panel panel-default"
+				div class="panel-heading"
+						h4 class="panel-title"
+							= @game.team_a.name
+				div class="panel-content" style="padding:10px;"
+					table class="table"
 						tr
-							td = player_stat.player.number
-							td = player_stat.player.alias
-							td = player_stat.score
-							td = player_stat.assist
-							td = player_stat.rebound
-							td = player_stat.steal
-							td = player_stat.dunk
-							td = player_stat.block
+							th 球员号码
+							th 球员姓名
+							th 得分
+							th 篮板
+							th 助攻
+							th 盖帽
+							th 抢断
+							th 灌篮
+						- @player_game_stats_team_a.each do |player_stat|
 
-		div class="panel panel-default"
-			div class="panel-heading"
-					h4 class="panel-title"
-						= @game.team_b.name
-			div class="panel-content" style="padding:10px;"
-				table class="table"
-					tr
-						th 球员号码
-						th 球员姓名
-						th 得分
-						th 篮板
-						th 助攻
-						th 盖帽
-						th 抢断
-						th 灌篮
-					- @player_game_stats_team_b.each do |player_stat|
+							tr
+								td = player_stat.player.number
+								td = player_stat.player.alias
+								td = player_stat.score
+								td = player_stat.assist
+								td = player_stat.rebound
+								td = player_stat.steal
+								td = player_stat.dunk
+								td = player_stat.block
 
+			div class="panel panel-default"
+				div class="panel-heading"
+						h4 class="panel-title"
+							= @game.team_b.name
+				div class="panel-content" style="padding:10px;"
+					table class="table"
 						tr
-							td = player_stat.player.number
-							td = player_stat.player.alias
-							td = player_stat.score
-							td = player_stat.assist
-							td = player_stat.rebound
-							td = player_stat.steal
-							td = player_stat.dunk
-							td = player_stat.block
+							th 球员号码
+							th 球员姓名
+							th 得分
+							th 篮板
+							th 助攻
+							th 盖帽
+							th 抢断
+							th 灌篮
+						- @player_game_stats_team_b.each do |player_stat|
+
+							tr
+								td = player_stat.player.number
+								td = player_stat.player.alias
+								td = player_stat.score
+								td = player_stat.assist
+								td = player_stat.rebound
+								td = player_stat.steal
+								td = player_stat.dunk
+								td = player_stat.block
+- else
+	p 该联赛尚无比赛

@@ -156,6 +156,8 @@ class TeamsController < ApplicationController
   end
 
   def apply_to_join
+    redirect_to controller: "user", action: "login", id: 0 unless current_user
+
     @team_application = TeamApplication.new(
         applicant_user_id: current_user.id,
         applied_team_id: params[:id],

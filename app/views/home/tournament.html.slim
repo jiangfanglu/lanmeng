@@ -1,3 +1,9 @@
+ol class="breadcrumb"
+  li
+    = link_to @tournamet.city.name+"赛区", controller: "tournament"
+  li class="active"
+    = @tournamet.name
+
 div class="row"
 	div class="col-lg-3"
 		div class="page-header"
@@ -25,7 +31,7 @@ div class="row"
 				| 球队
 
 		- @teams.each do |team|
-			div class="col-lg-4"
+			div class="col-lg-4 col-xs-6"
 				== render :partial => "teams/logo", :locals => {:team_id=>team.id, :team_logo=>team.logo}	
 
 	div class="col-lg-3"

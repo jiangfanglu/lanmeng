@@ -25,7 +25,7 @@
   <span class="input-icon hide"><span class="glyphicon" style="color:red;"></span></span>
 </div>
 
-<div class="checkbox_1">
+<!-- <div class="checkbox_1">
   <label class="" for="term_check">
     <input type="checkbox" value="" id="term_check" name="post[term_check]">
   </label>
@@ -33,14 +33,14 @@
   	<a href="#" class="important_link termandcondition" ><%=t('term_and_cond')%></a>
     <%=t :and_ %>
     <a href="#" class="important_link privacyplocy" ><%=t('privacy_policy')%></a>
-</div>
+</div> -->
 
 <div class="form-group" style="padding-top:10px;">
 	<input type='hidden' id="pass" data-email="0" data-password="0" data-passwordrtype="0" />
     <button type="submit" class="btn btn-sm btn-success btn-block"><%=t :signup %></button>
 </div>
 <div class="form-group">
-		<%=t :already_registered %> <%=link_to t('signin'), {:controller=>'user',:action=>'login'},{:class=>"tagbtn"} %>
+		<%=t :already_registered %> <%=link_to t('signin'), {:controller=>'user',:action=>'login', :id=>0},{:class=>"btn btn-default btn-xs"} %>
 </div>
 <% end -%>
 <script>
@@ -118,10 +118,10 @@
 			showalert('<%=t :signup_information_error %>');
 			event.preventDefault();
 		}
-		if(!$('#term_check').prop('checked')){
-			showalert('<%=t :must_agree_on_terms %>');
-			event.preventDefault();
-		}
+		// if(!$('#term_check').prop('checked')){
+		// 	showalert('<%=t :must_agree_on_terms %>');
+		// 	event.preventDefault();
+		// }
 		if($('#post_password').val()=="" || $('#retype_password').val()=="" || $('#email').val()==""){
 			event.preventDefault();
 			showalert('<%=t :missing_input %>');
