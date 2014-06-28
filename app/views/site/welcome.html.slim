@@ -1,0 +1,10 @@
+p Hi #{@user.username}:
+br
+p 
+	| 欢迎来到 
+	= link_to "玩.篮球 (wanlanqiu.com)", "http://wanlanqiu.com"
+
+p style="border-top:1px dashed #ddd;"
+
+== render :partial=>"about/about"
+

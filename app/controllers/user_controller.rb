@@ -167,6 +167,8 @@ class UserController < ApplicationController
 	        end
 	        
 	        new_user_session(user.email)
+
+	        Site.delay.welcome(user)
 	        # case check_username_type(params[:post][:email]).to_i
 	        # when 1 #email
 	        #   UserMailer.delay(run_at: 10.seconds.from_now).welcome(u)

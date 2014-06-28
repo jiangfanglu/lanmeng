@@ -65,12 +65,39 @@ div class="row"
 	div class="page-header" id="team_recruit"
 		h4 您的球队还没有满员. 需要招募吗?
 
-	form action="/teams/invite" method='post'
-		p 输入需要招募人的QQ号,每输入一个后单击回车
-		input class='tagsinput' rows='2' name="invited" id="invited" value=''
-		br
-		button type='submit' class='btn btn-info'
-			| 邀请
+	//form action="/teams/invite" method='post'
+	p 输入需要招募人的QQ号,每输入一个后单击回车
+	input class='tagsinput' rows='2' name="invited" id="invited" value=''
+	br
+	button type='submit' class='btn btn-info invite_button'
+		| 邀请
+	| &nbsp;&nbsp;
+	span class="invite_message hide"
+javascript:
+	$(".invite_button").click(function(){
+		var obj = $(this);
+		obj.html("邀请发送中....");
+		$.ajax({
+		  type: "POST",
+		  url: "/teams/invite/#{@team.id}",
+		  beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+		  data: {
+		  	invited: $("#invited").val()
+		  }
+		})
+		.done(function(html){
+			if(html=="OK"){
+				obj.html("邀请");
+				$(".invite_message").html("邀请发送成功!");
+			}else{
+				$(".invite_message").html("邀请发送失败!");
+			}
+			$(".invite_message").removeClass("hide");
+			setTimeout(function(){
+				$(".invite_message").addClass("hide");
+			},3000);
+		});
+	});
 
 - unless @team.players.size >= MAX_TEAM_MEMBER
 	div class="page-header" id="team_application"

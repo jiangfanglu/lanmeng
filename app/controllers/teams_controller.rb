@@ -122,7 +122,15 @@ class TeamsController < ApplicationController
     render layout: 'user'
   end
 
+  def jointeamrequestonhold
+  end
+
   def invite
+    @qqs = params[:invited].split(",")
+    @qqs.each do |qq|
+      Site.delay.inivte_friends(current_user.name, qq, params[:id])
+    end
+    render :text=>"OK", :layout=>false
   end
 
   def confirm_join

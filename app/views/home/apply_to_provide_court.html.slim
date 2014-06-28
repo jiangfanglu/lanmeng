@@ -4,7 +4,7 @@ div class="page-header"
 p 你可以是场馆管理者，也可以是可以联系到场馆的联系人
 br	
 
-div class="row"
+div class="row request_form"
 	div class="col-lg-6"
 
 		div class="form-group"
@@ -12,11 +12,11 @@ div class="row"
 			= text_field 'court', 'name', class: 'form-control', placeholder: "您的姓名"
 		div class="form-group"
 			label 您提供场馆所在的城市 *
-			= text_field 'court', 'name', class: 'form-control', placeholder: "您提供场馆所在的城市"
+			= text_field 'court', 'city', class: 'form-control', placeholder: "您提供场馆所在的城市"
 
 		div class="form-group"
 			label 场馆名称 *
-			= text_field 'court', 'name', class: 'form-control', placeholder: "场馆名称"
+			= text_field 'court', 'court_name', class: 'form-control', placeholder: "场馆名称"
 
 		field
 			legend 
@@ -26,15 +26,53 @@ div class="row"
 
 			div class="form-group"
 				label 手机号
-				= text_field 'court', 'name', class: 'form-control', placeholder: "手机号"
+				= text_field 'court', 'mobile', class: 'form-control', placeholder: "手机号"
 			div class="form-group"
 				label 电子邮件
-				= text_field 'court', 'name', class: 'form-control', placeholder: "电子邮件"
+				= text_field 'court', 'email', class: 'form-control', placeholder: "电子邮件"
 			div class="form-group"
 				label QQ号
-				= text_field 'court', 'name', class: 'form-control', placeholder: "QQ号"
+				= text_field 'court', 'qq', class: 'form-control', placeholder: "QQ号"
 		
 		div class="form-group"
-			button class="btn btn-info"
+			button class="btn btn-info apply_court"
 				| 提交申请
 
+			| &nbsp;&nbsp;
+			span class="apply_court_message hide"
+
+div class="jumbotron hide"
+  h3 您的申请我们已经收到。非常感谢您的支持！
+  p 我们将尽快的与您取得联系
+  
+
+javascript:
+	$(".apply_court").click(function(){
+		var obj = $(this);
+		obj.html("申请发送中....");
+		$.ajax({
+		  type: "POST",
+		  url: "/home/apply_to_provide_court_email",
+		  beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+		  data: {
+		  	name: $("#court_name").val(),
+		  	city: $("#court_city").val(),
+		  	court_name: $("#court_court_name").val(),
+		  	mobile: $("#court_mobile").val(),
+		  	email: $("#court_email").val(),
+		  	qq: $("#court_qq").val()
+		  }
+		})
+		.done(function(html){
+			if(html=="OK"){
+				$(".request_form").addClass("hide");
+				$(".jumbotron").removeClass("hide");
+			}else{
+				$(".apply_court_message").html("申请发送失败!");
+				$(".apply_court_message").removeClass("hide");
+				setTimeout(function(){
+					$(".apply_court_message").addClass("hide");
+				},3000);
+			}
+		});
+	});

@@ -34,4 +34,14 @@ Lanmeng::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              'smtp.mxhichina.com',
+    port:                 25,
+    domain:               'smtp.mxhichina.com',
+    user_name:            'info@wanlanqiu.com',
+    password:             'beibeilanqiuren520',
+    authentication:       :login 
+  }
 end

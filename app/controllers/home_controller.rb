@@ -11,6 +11,23 @@ class HomeController < ApplicationController
     # @weblogs = Weblog.where("blog_type = 'G'").order("created_at desc")
   end
 
+  def test
+    render layout: "mail"
+  end
+
+  def apply_to_provide_court_email
+    @information = {
+        :name => params[:name],
+        :city => params[:city],
+        :court_name => params[:court_name],
+        :mobile => params[:mobile],
+        :email => params[:email],
+        :qq => params[:qq]
+    }
+    Site.delay.court_request(@information)
+    render :text=>"OK", :layout=>false
+  end
+
   def court
     @court = Court.find params[:id]
   end

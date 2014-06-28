@@ -1,0 +1,22 @@
+p
+	| Hi 兄弟：
+br
+p
+	| 我在
+	= link_to "玩.篮球 (wanlanqiu.com)", "http://wanlanqiu.com"
+	| 创建了一个球队，现在招募队员。兄弟，需要你的时候到了。点击以下链接加入：
+p 
+	= link_to "加入#{@invitor}的球队", "http://wanlanqiu.com/teams/jointeamrequestonhold/#{@team_id}"	
+	br
+	| 或者
+	br
+	= link_to "http://wanlanqiu.com/teams/jointeamrequestonhold/#{@team_id}", "http://wanlanqiu.com/teams/jointeamrequestonhold/#{@team_id}"	
+
+p Come on, bro！一起嗨翻天！
+br
+
+p = @invitor
+
+p style="border-top:1px dashed #ddd;"
+
+== render :partial=>"about/about"
