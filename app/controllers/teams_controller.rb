@@ -123,6 +123,8 @@ class TeamsController < ApplicationController
   end
 
   def jointeamrequestonhold
+    cookies[:team_invited] = {value: params[:id], expires: 20.years.from_now.utc}
+    redirect_to "/"
   end
 
   def invite
@@ -172,7 +174,8 @@ class TeamsController < ApplicationController
         status: 0
       )
     if @team_application.save
-      render controller: 'teams', action: "my_team", id: 0
+       cookies[:team_invited] = nil if cookies[:team_invited]
+      redirect_to controller: 'teams', action: "my_team", id: 0, :applied=>1
     end
   end
 

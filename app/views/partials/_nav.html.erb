@@ -104,3 +104,45 @@
   </div><!-- /.navbar-collapse -->
 </nav>
 </div>
+<%if cookies[:team_invited] && !cookies[:team_invited].blank? %>
+<div class="container">
+<div class="alert alert-warning" role="alert">
+  您还有一个入队申请未完成. 
+  <% if current_user %>
+    <% if current_user.player.blank? %>
+        <%=link_to "成为球员用户，然后完成该申请", :controller=>"players", :action=>"new" %>
+    <% else %>
+        <%=link_to "完成该申请", :controller=>"teams", :action=>"apply_to_join", :id=>cookies[:team_invited] %>
+    <% end %>
+  <% else %>
+    <%=link_to "请登录，然后完成该申请", :controller=>"user", :action=>"login", :id=>0 %>
+  <% end %>
+</div>
+</div>
+<%end%>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
