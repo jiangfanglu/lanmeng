@@ -19,7 +19,7 @@ div class="row"
 		p 
 			- @tournamet.courts.each do |court|
 				addr 
-					b = court.name
+					b = link_to court.name, {action: :court, id: court.id},{target: "_blank"}
 					br
 					| 地址: 
 					= court.location

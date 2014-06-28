@@ -1,0 +1,49 @@
+div class="page-header"
+	h3 常见问题
+
+ol
+	li = link_to "如何成为球员?", "#beplayer"
+	li = link_to "如何创建球队?", "#createteam"
+	li = link_to "如何邀请朋友入队?", "#invitefriends"
+	li = link_to "如何加入到别的球队中?", "#jointeam"
+	li = link_to "比赛的是多久一次啊？", "#gameinterval"
+	li = link_to "我需要支付场馆使用费用吗？", "#courtcharge"
+
+
+div class="question-header"
+	h5 id="beplayer"
+		strong 1. 如何成为球员?
+
+p 
+	= link_to t('signin'), {:controller=>'user',:action=>'login', :id=>0},{:class=>"link"}
+	| &nbsp;&gt;&nbsp;点击"成为球员". 在填入"喜欢的球衣号码"与"昵称"以后即可成为"球员用户"
+
+div class="question-header"
+	h5 id="createteam"
+		strong 2. 如何创建球队?
+
+p 创建球队前，您必须已经是"球员用户".
+
+div class="question-header"
+	h5 id="invitefriends"
+		strong 3. 如何邀请朋友入队?
+
+p 啊厚度啊深度阿斯回答	
+
+div class="question-header"
+	h5 id="jointeam"
+		strong 4. 如何加入到别的球队中?
+
+p 啊厚度啊深度阿斯回答	
+
+div class="question-header"
+	h5 id="gameinterval"
+		strong 5. 比赛的是多久一次啊?
+
+p 啊厚度啊深度阿斯回答	
+
+div class="question-header"
+	h5 id="courtcharge"
+		strong 6. 我需要支付场馆使用费用吗？
+
+p 啊厚度啊深度阿斯回答	

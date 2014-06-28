@@ -1,0 +1,21 @@
+div class="page-header"
+	span style="font-size:24px;display:inline-block;padding:10px;" 
+		| 合作场馆
+	= link_to '申请提供场馆', {controller: "home", action: "apply_to_provide_court"},{class: "btn btn-warning pull-right"}
+
+- @zones.each do |zone|
+	h4 = zone.name
+	- zone.cities.each do |city|
+		h4 style="color:#999;"
+			| &nbsp;&nbsp;
+			= city.name
+		- city.tournaments.each do |tournament|
+			| &nbsp;&nbsp;&nbsp;&nbsp;
+			= tournament.name
+			| : &nbsp;
+			- tournament.courts.each do |court|
+				= link_to court.name, {action: :court, id: court.id},{:class=>"btn btn-xs btn-default",target: "_blank"}
+				| &nbsp;
+	p style="border-top:1px dashed #ddd;"
+		| &nbsp;
+

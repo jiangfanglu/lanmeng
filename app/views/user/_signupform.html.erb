@@ -3,24 +3,24 @@
 </div>
 <%= form_tag({:controller=>'user',:action=>'create'},{:id=>'signup_form',:method=>"post"}) do -%>
 <div class="form-group">
-	<label><%=t('username') %></label>
+	<label><%=t('username') %> *</label>
   <input type="text" class="form-control " id="username" name="post[username]" placeholder="<%=t('enter')+t('username') %>" data-task="checkemail" />
   <span class="input-icon hide"><span class="glyphicon" style="color:red;"></span></span>
 </div>
 
 <div class="form-group">
-	<label><%=t('email') %></label>
+	<label><%=t('email') %> *</label>
   <input type="text" class="form-control " id="email" name="post[email]" placeholder="<%=t('enter')+t('email') %>" data-task="checkemail" />
   <span class="input-icon hide"><span class="glyphicon" style="color:red;"></span></span>
 </div>
 
 <div class="form-group">
-	<label><%=t('password') %></label>
+	<label><%=t('password') %> *</label>
   <input type="password" class="form-control " id="post_password" name="post[password]" placeholder="<%=t('enter')+t('password') %>" />
   <span class="input-icon hide"><span class="glyphicon" style="color:red;"></span></span>
 </div>
 <div class="form-group">
-	<label><%=t('retype_password') %></label>
+	<label><%=t('retype_password') %> *</label>
   <input type="password" class="form-control " id="retype_password" name="post[retype_password]" placeholder="<%=t('retype_password') %>" />
   <span class="input-icon hide"><span class="glyphicon" style="color:red;"></span></span>
 </div>
