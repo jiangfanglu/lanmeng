@@ -112,7 +112,7 @@
     <% if current_user.player.blank? %>
         <%=link_to "成为球员用户，然后完成该申请", :controller=>"players", :action=>"new" %>
     <% else %>
-        <%=link_to "完成该申请", :controller=>"teams", :action=>"apply_to_join", :id=>cookies[:team_invited] %>
+        <%=link_to "去完成该申请", :controller=>"teams", :action=>"apply_to_join", :id=>cookies[:team_invited] %>
     <% end %>
   <% else %>
     <%=link_to "请登录，然后完成该申请", :controller=>"user", :action=>"login", :id=>0 %>

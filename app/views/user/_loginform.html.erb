@@ -32,7 +32,7 @@
 		    </a>
 	    </div>
 	    <p>
-	    		<%=link_to t('forgot_password'), {:controller=>'home',:action=>'forgot_password'},{:class=>"btn btn-default btn-xs"} %> &nbsp;&nbsp;&nbsp;
+	    		<%=link_to t('forgot_password'), {:controller=>'user',:action=>'forgot_password', :id=>0},{:class=>"btn btn-default btn-xs"} %> &nbsp;&nbsp;&nbsp;
 	    		还没有帐号? 
 	    		<a  href="/user/signup/0" class="btn btn-default btn-xs">
 		    		<%=t :signup %>

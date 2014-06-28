@@ -107,18 +107,20 @@ javascript:
 		| 还没有人申请加入, 快多多动员你的小伙伴们加入吧!
 	- else
 		div class="row"
-		- @applications.each do |application|
-			div class="col-lg-2"
-				div class="thumbnail"
-					== render :partial => "players/avartar", :locals => {:user_id=>application.applicant_user_id, :player_id=>application.user.player.id}
-					div class="caption text-center"
-						= application.user.player.alias
-						br
-						br
-						= link_to "同意加入", {:action=>"confirm_join",:id=>"#{Time.new.to_i}_#{@team.id}_#{application.user.player.id}_#{application.id}"}, {:class=>"btn btn-xs btn-default confirm_join"}
-						br
-						br
-						= link_to "拒绝加入", {:action=>"refuse_application",:id=>"#{Time.new.to_i}_#{@team.id}_#{application.user.player.id}_#{application.id}"}, {:class=>"btn btn-xs btn-danger confirm_join"}
+			- @applications.each do |application|
+				div class="col-lg-2"
+					div class="thumbnail"
+						== render :partial => "players/avartar", :locals => {:user_id=>application.applicant_user_id, :player_id=>application.user.player.id}
+						div class="caption text-center"
+							= application.user.player.alias
+							br
+							br
+							= link_to "同意加入", {:action=>"confirm_join",:id=>"#{Time.new.to_i}_#{@team.id}_#{application.user.player.id}_#{application.id}"}, {:class=>"btn btn-xs btn-default confirm_join"}
+							br
+							br
+							= link_to "拒绝加入", {:action=>"refuse_application",:id=>"#{Time.new.to_i}_#{@team.id}_#{application.user.player.id}_#{application.id}"}, {:class=>"btn btn-xs btn-danger confirm_join"}
+
+					
 
 div class="page-header" id="team_members"
 	h4 发布球队公告

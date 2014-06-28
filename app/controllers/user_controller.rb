@@ -1,13 +1,59 @@
 class UserController < ApplicationController
 	include ApplicationHelper
 	#layout 'user'
-	before_filter :allowed, :only => [:login, :signup]
-	skip_before_filter :verify_authenticity_token, :only => [:create]
+	before_filter :allowed, :only => [:login, :signup, :forgot_password, :sendpwdresetcode]
+	skip_before_filter :verify_authenticity_token, :only => [:create,:pwdreset]
 	def index
 
 	end
 
 	def show
+	end
+
+	def forgot_password
+		render layout: "application"
+	end
+
+	def login_and_reset_pwd
+		@user = User.find_by_email params[:eml]
+		unless @user.blank? 
+			if @user.token == params[:token]
+				new_user_session(@user.email)
+			else
+				@incorrect_token = t("incorrect_token")
+			end
+		else
+			@incorrect_user = t("incorrect_user")
+		end
+		render layout: "application"
+	end
+
+	def pwdreset
+		password_encrypt = encrypt(params[:pwd][:new])
+		user = current_user
+		user.password = password_encrypt['password']
+	     user.salt = password_encrypt['salt']
+	     user.token = ""
+	     user.save
+	     redirect_to "/user"
+	end
+
+	def sendpwdresetcode
+		if simple_captcha_valid?
+		  	if validate_email(params[:pwd][:email])
+		  		@code = SecureRandom.base64(24)
+		  		@user = User.find_by_email params[:pwd][:email]
+		  		unless @user.blank?
+		  			@user.token = @code and @user.save
+		  			Site.delay.reset_pwd(params[:pwd][:email], @code)
+		  		end
+		  		redirect_to controller: 'user', action: 'forgot_password', id: 0, succ: "1"
+		  	else
+		  		redirect_to controller: 'user', action: 'forgot_password', id: 0, notice: t('email_format_not_valid') 
+		  	end
+		else
+			redirect_to controller: 'user', action: 'forgot_password', id: 0, notice: t('incorrect_captcha') 
+		end
 	end
 
 	def volunteer

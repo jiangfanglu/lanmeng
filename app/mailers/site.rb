@@ -16,4 +16,10 @@ class Site < ActionMailer::Base
   	@team_id = team_id
   	mail(to: "#{friend_qq}@qq.com", subject: "#{invitor}#{t('join_his_team')}")
   end
+
+  def reset_pwd email, code
+    @code = code
+    @email = email
+    mail(to: email, subject: t('password_reset_title'))
+  end
 end

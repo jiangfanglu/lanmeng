@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :aliyunoss_authenticate
+  include SimpleCaptcha::ControllerHelpers
   include ApplicationHelper
   def aliyunoss_authenticate
     Aliyun::OSS::Base.establish_connection!(

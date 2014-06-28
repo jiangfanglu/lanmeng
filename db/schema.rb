@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140628095235) do
+ActiveRecord::Schema.define(:version => 20140628224321) do
 
   create_table "cities", :force => true do |t|
     t.string   "name"
@@ -130,6 +130,15 @@ ActiveRecord::Schema.define(:version => 20140628095235) do
     t.integer  "user_id"
     t.integer  "tournament_id"
   end
+
+  create_table "simple_captcha_data", :force => true do |t|
+    t.string   "key",        :limit => 40
+    t.string   "value",      :limit => 6
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
+
+  add_index "simple_captcha_data", ["key"], :name => "idx_key"
 
   create_table "team_applications", :force => true do |t|
     t.integer  "applicant_user_id"

@@ -1,0 +1,23 @@
+form action="/user/pwdreset/0" method="post" id="pwdresetform"
+	- unless params[:action] == "login_and_reset_pwd"
+		div class="form-group"
+			label 旧密码
+			= password_field 'pwd', 'old', class: "form-control"
+	div class="form-group"
+		label 新密码
+		= password_field 'pwd', 'new', class: "form-control"
+	div class="form-group"
+		label 确认密码
+		= password_field 'pwd', 'new_repeat', class: "form-control" 
+	div class="form-group"
+		button type="submit" class="btn btn-success"
+			| 修改
+
+
+javascript:
+	$("#pwdresetform").submit(function(event){
+		if($("#pwd_new").val() != $("#pwd_new_repeat").val()){
+			event.preventDefault();
+			alert("密码输入不符!");
+		}
+	});
