@@ -50,7 +50,7 @@ class TeamsController < ApplicationController
       tmp = params[:thumbnail].tempfile
       ext = File.extname(params[:thumbnail].original_filename)
 
-      file = File.join(TEMPORARY_FILE_FOLDER, "team-#{params[:id]}#{ext}".downcase)
+      file = File.join("#{Rails.root}/#{TEMPORARY_FILE_FOLDER}", "team-#{params[:id]}#{ext}".downcase)
       FileUtils.cp tmp.path, file
       #img = Magick::Image.read( file )
 
