@@ -40,6 +40,65 @@ class TeamsController < ApplicationController
     render layout: 'user'
   end
 
+  def uploadlogo
+    render layout: 'user'
+  end
+
+  def cropthumbnail
+    #require 'fileutils'
+
+      tmp = params[:thumbnail].tempfile
+      ext = File.extname(params[:thumbnail].original_filename)
+
+      file = File.join(TEMPORARY_FILE_FOLDER, "team-#{params[:id]}#{ext}".downcase)
+      FileUtils.cp tmp.path, file
+      #img = Magick::Image.read( file )
+
+      image = MiniMagick::Image.open(file)
+      w = image[:width].to_f
+      h = image[:height].to_f
+      ratio = w/h
+
+      if w >= 600
+        image.resize "600x#{((600/ratio).to_i).to_s}"
+        image.write file
+      end
+
+      session[:tmp_thumb_image] = {
+        :file=> file, 
+        :filename=>Time.new.to_f.to_s.gsub(".",""), 
+        :dimension=>{
+          :width=>600,
+          :height=>(600/ratio).to_i
+          }}
+      render layout: 'user'
+  end
+
+  def crop_image
+    foldername = "team/#{params[:id]}/logo/"
+    if gen_avartar(session[:tmp_thumb_image][:file], 
+          params[:width].to_i,
+          params[:height].to_i,
+          params[:x].to_i,
+          params[:y].to_i,
+          params[:actual_width].to_i,
+          150,
+          "#{foldername}#{session[:tmp_thumb_image][:filename]}")
+        
+        # uploaded = upload_image_basic(params[:team]['logo'], filename, foldername)
+          
+          @team = Team.find params[:id]
+          @team.logo = session[:tmp_thumb_image][:filename]
+          @team.save
+
+          session[:tmp_thumb_image] = nil
+
+          render :text=>"OK",:layout=>false
+      else
+          render :text=>"Transfer failed",:layout=>false  
+      end
+  end
+
   # POST /teams
   # POST /teams.json
   def create
@@ -53,18 +112,12 @@ class TeamsController < ApplicationController
 
     respond_to do |format|
       if @team.save
-        foldername = "team/#{@team.id}/logo/"
-        filename = Time.new.to_f.to_s.gsub(".","")
-        uploaded = upload_image_basic(params[:team]['logo'], filename, foldername)
 
         @player_team = PlayerTeam.new(
             player_id: current_user.player.id,
             team_id: @team.id
           )
         @team.member_count += 1 if @player_team.save
-        @team.logo = uploaded[1]
-        
-        @team.save unless uploaded[0]
 
         @team_stat = TeamStat.new(
             team_id: @team.id,
@@ -91,7 +144,7 @@ class TeamsController < ApplicationController
     respond_to do |format|
       if @team.update_attributes(params[:team])
 
-        format.html { redirect_to @team, notice: t('successfully_updated_team') }
+        format.html { redirect_to action: 'captain_teams', id: 0, notice: t('successfully_updated_team') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

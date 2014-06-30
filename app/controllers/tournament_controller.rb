@@ -19,6 +19,9 @@ class TournamentController < ApplicationController
   			team_id: @team.id,
   			tournament_id: params[:id].to_i
   		)
+    @tournament = Tournament.find params[:id].to_i
+    @tournament.team_count += 1
+    @tournament.save 
   	redirect_to :controller=>"teams", :action=>"captain_teams",:id=>0 if @team_tournament.save
   end
 

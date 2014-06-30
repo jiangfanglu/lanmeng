@@ -1,0 +1,94 @@
+<%= stylesheet_link_tag "imageselect/imgareaselect-default", :media => "screen" %>
+<div class="page-header">
+	<h4>裁剪头像图片</h4>
+</div>
+<div class="row">
+		<div class="col-lg-9 text-center">
+			 
+			    <p>
+			     <%=image_tag("/uploaded/team-#{params[:id]}.jpg?v=#{Time.new.to_i}",:id=>"photo",:class=>"img-responsive",:style=>"width:100%;") %>
+			    </p>
+			    <p>
+			    		<input type="hidden" id="crop_w" name="crop_w" value="" />
+			    		<input type="hidden" id="crop_h" name="crop_h" value="" />
+			    		<input type="hidden" id="crop_x" name="crop_x" value="" />
+			    		<input type="hidden" id="crop_y" name="crop_y" value="" />
+					<a href="/user/home" class="btn btn-sm btn-info mhm"><%=t :cancel %></a>
+					<a href="#" class="btn btn-sm btn-info mhm" id="start_cropping"><%=t :confirm %><%=t :and %><%=t :modify %></a>
+			    </p>
+
+		</div>
+		<div class="col-lg-3">
+				<div id="preview" style="width: 100px; height: 100px; overflow: hidden;margin-top:50px;">
+		        <%=image_tag("/uploaded/team-#{params[:id]}.jpg?v=#{Time.new.to_i}",:style=>"width: 100px; height: 100px;") %>
+		      </div>
+		</div>
+	</div>
+<%#=render :partial=>"inprogress" %>
+<%= javascript_include_tag "jquery.imgareaselect.min" %>
+<script type="text/javascript">
+
+function preview(img, selection) {
+	var image_width = $("#photo").width();
+	var image_height = $("#photo").height();
+    if (!selection.width || !selection.height)
+        return;
+    
+    var scaleX = 100 / selection.width;
+    var scaleY = 100 / selection.height;
+
+    $('#preview img').css({
+        width: Math.round(scaleX * image_width),
+        height: Math.round(scaleY * image_height),
+        marginLeft: -Math.round(scaleX * selection.x1),
+        marginTop: -Math.round(scaleY * selection.y1)
+    });
+	
+    $("#crop_w").val(selection.width);
+    $("#crop_h").val(selection.height);
+    $("#crop_x").val(selection.x1);
+    $("#crop_y").val(selection.y1);
+}
+
+$("#start_cropping").click(function(){
+	var image_width = $("#photo").width();
+	var image_height = $("#photo").height();
+	//$("#in_progress").modal();
+	$(this).addClass("disabled");
+	$(this).html("处理中,请等待......");
+	$.ajax({
+	  type: "POST",
+	  url: '/teams/crop_image/<%=params[:id]%>',
+	  beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+	  data: { x: $("#crop_x").val(),
+	  		  y: $("#crop_y").val(),
+	  		  width: $("#crop_w").val(),
+	  		  height: $("#crop_h").val(),
+	  		  actual_width: image_width,
+	  		  actual_height:image_height }
+	})
+	.done(function(html){
+		if(html == "OK"){
+			window.location.href = "/teams/captain_teams/0";
+		}
+	});
+});
+
+$(function () {
+    // $('#photo').imgAreaSelect({ aspectRatio: '1:1', handles: true,
+    //     fadeSpeed: 200, onSelectEnd: preview });
+
+     $('#photo').imgAreaSelect({ 
+    		aspectRatio: '1:1',
+    		show:true,
+    		x1: 10,
+    		y1: 10,
+    		x2: 110,
+    		y2: 110,  
+    		handles: true, 
+    		fadeSpeed: 200, 
+    		onSelectEnd: preview,
+    		onInit: preview
+    	});
+});
+</script>
