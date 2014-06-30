@@ -25,7 +25,7 @@ class TournamentController < ApplicationController
   def game_stats
     @tournament = Tournament.find params[:id]
 
-    @games = Game.includes(:team_a).includes(:team_b).joins(:game_tournaments).where("game_tournaments.tournament_id = ? and time >= ?", params[:id], Time.now).order("games.created_at desc")
+    @games = Game.includes(:team_a).includes(:team_b).joins(:game_tournaments).where("game_tournaments.tournament_id = ?", params[:id]).order("games.time desc")
     if @games.size > 0
       @games = @games.select{|game| game.stat_enterred? }
       @game = params[:gid] ? Game.find(params[:gid]) : @games.first

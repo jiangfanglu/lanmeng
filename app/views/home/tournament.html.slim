@@ -19,6 +19,9 @@ div class="row"
 				= @tournamet.name
 				| 场馆
 
+		- if @tournamet.courts.size < 1
+			p 暂无场馆信息
+
 		p 
 			- @tournamet.courts.each do |court|
 				addr 
@@ -32,6 +35,9 @@ div class="row"
 			h4 
 				= @tournamet.name
 				| 球队
+
+		- if @teams.size < 1
+			p 暂无球队信息
 
 		- @teams.each do |team|
 			div class="col-lg-4 col-xs-6"
