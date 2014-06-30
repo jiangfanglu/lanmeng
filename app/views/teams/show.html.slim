@@ -5,7 +5,9 @@ ol class="breadcrumb"
     = @team.name
 
 div class="row"
-  div class="col-lg-9"
+  div class="col-lg-2"
+    == render :partial => "teams/logo", :locals => {:team_id=>@team.id, :team_logo=>@team.logo} 
+  div class="col-lg-7"
     div class="page-header"
       h3 
         = @team.name
