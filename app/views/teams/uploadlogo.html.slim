@@ -1,7 +1,15 @@
-== form_tag("/teams/cropthumbnail/#{params[:id]}",  multipart: true)
+== form_tag("/teams/cropthumbnail/#{params[:id]}",id: "thumbnail_form",  multipart: true)
  	div class="page-header" 
  		h4 上传球队LOGO图片
- 	input type='file' name="thumbnail" id="thumbnail" 
+ 	input type='file' name="thumbnail" id="thumbnail"  accept="image/jpeg,image/png"
  	br
  	button type="submit" class="btn btn-default"
  		| 上传
+
+javascript:
+ 	$("#thumbnail_form").submit(function(event){
+ 		if($("#thumbnail").val()==""){
+ 			event.preventDefault();
+ 			alert("请选择图片");
+ 		}
+ 	});

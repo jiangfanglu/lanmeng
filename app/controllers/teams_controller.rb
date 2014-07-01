@@ -26,7 +26,7 @@ class TeamsController < ApplicationController
   # GET /teams/new.json
   def new
     @team = Team.new
-
+    @tournaments = Tournament.includes(:city).order("cities.name asc").all
     respond_to do |format|
       format.html { render layout: 'user' }
       format.json { render json: @team }
@@ -125,6 +125,15 @@ class TeamsController < ApplicationController
             lose: 0
           )
         @team_stat.save
+
+        @team_tournament = TeamTournament.new(
+            team_id: @team.id,
+            tournament_id: params[:post][:tournament_id].to_i
+          )
+        @tournament = Tournament.find params[:post][:tournament_id].to_i
+        @tournament.team_count += 1
+        @tournament.save 
+        @team_tournament.save
 
         format.html { redirect_to action: 'captain_teams', id: 0 , notice: t('successfully_created_team') }
         format.json { render json: @team, status: :created, location: @team }

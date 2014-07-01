@@ -20,4 +20,8 @@
     = f.hidden_field :member_count, :value=>0
   .field
     = f.hidden_field :captain_player_id, :value=>current_user.player.id
+  - if params[:action] == "new"
+    .field
+      label 选择赛区
+      == select("post", "tournament_id", @tournaments.collect {|t| [ "#{t.city.name}#{t.name}", t.id ] }, {include_blank: '选择赛区', :default=>0},{:class => 'form-control',:id=>'post_tournament_id'})
   .actions = f.submit t('save'), :class=>"btn btn-default"

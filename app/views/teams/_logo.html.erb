@@ -1,5 +1,6 @@
 <div class="thumbnail">
-<a href="/teams/<%=team_id%>">
-<img src="<%="#{MEIDIA_SERVER}/#{BUCKET_NAME}/team/#{team_id}/logo/#{team_logo}"%>" class="img-responsive" onerror="this.src='<%="#{SITE_ROOT}/assets/icons/dude.svg"%>'" />
+<a href="/teams/<%=team.id%>">
+<img src="<%="#{MEIDIA_SERVER}/#{BUCKET_NAME}/team/#{team.id}/logo/#{team.logo}"%>" class="img-responsive" onerror="this.src='<%="#{SITE_ROOT}/assets/icons/dude.svg"%>'" />
 </a>
+<div class="caption"><%=team.name%></div>
 </div>
