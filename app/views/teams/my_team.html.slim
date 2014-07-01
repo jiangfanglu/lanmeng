@@ -1,3 +1,9 @@
+ol class="breadcrumb"
+  li
+    = link_to "我参与的球队", controller: "teams", action: "my_teams", id: 0
+  li class="active"
+    = @team.name
+
 - if @team.blank?
 	- if params[:applied]
 		div class="alert alert-success" role="alert"

@@ -1,0 +1,10 @@
+div class="page-header"
+	h3 我参与的球队
+
+- if @teams.size < 1
+	p 暂无球队信息
+
+div class="row"
+	- @teams.each do |team|
+		div class="col-lg-2 col-xs-6 text-center"
+			== render :partial => "teams/myteamlogo", :locals => {:team=>team}

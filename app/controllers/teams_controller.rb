@@ -242,11 +242,16 @@ class TeamsController < ApplicationController
   end
 
   def my_team
-    @team = current_user.player.teams.includes(:team_stat).includes(:tournaments).first
+    @team = Team.includes(:team_stat).includes(:tournaments).find params[:id]
     unless @team.blank?
       @captain = Player.find @team.captain_player_id
       @weblogs = Weblog.where("user_id = ? and blog_type = 'T' ", @captain.user_id).order("created_at desc").limit(30)
     end
+    render layout: 'user'
+  end
+
+  def my_teams
+    @teams = current_user.player.teams
     render layout: 'user'
   end
 end

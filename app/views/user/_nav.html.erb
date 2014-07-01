@@ -7,7 +7,7 @@
   <%else%>
    <li class=" <%= 'active' if params[:controller] == "teams" && params[:action] == 'new' %>"><a href="/teams/new">创建球队</a></li>
   <%end%>
-  <li class=" <%= 'active' if params[:controller] == "teams" && params[:action] == 'my_team' %>"><a href="/teams/my_team/0">我参与的球队</a></li>
+  <li class=" <%= 'active' if params[:controller] == "teams" && (params[:action] == 'my_team' || params[:action] == 'my_teams') %>"><a href="/teams/my_teams/0">我参与的球队</a></li>
 
 <%else%>
  <li class=" <%= 'active' if params[:controller] == "players" && params[:action] == 'new' %>"><a href="/players/new">成为球员</a></li>
