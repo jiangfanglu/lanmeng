@@ -5,20 +5,18 @@
 		<div class="alert alert-danger" id="<%=alt%>login-alert" style="display:none;"></div>
 
 	    <div class="form-group">
-	      <label for="email"><%=t :email %></label>
 		<div class="input-group">
 			<span class="input-group-addon" style="background:#f7f7f7;border-color:#ddd;color:#999;padding:8px 10px;">
-				<span class="glyphicon glyphicon-user"></span>
+				<%=t :email %></span>
 			</span>
 	      <input type="text" class="form-control " id="<%=alt%>si_email" name='email' placeholder="<%=t('email') %>">
 		</div>
 		
 	    </div>
 	    <div class="form-group">
-	      <label for="password"><%=t :password %></label>
 			<div class="input-group">
 			<span class="input-group-addon" style="background:#f7f7f7;border-color:#ddd;color:#999;padding:8px 10px;">
-				<span class="glyphicon glyphicon-lock"></span>
+				<%=t :password %></span>
 			</span>
 	      <input type="password" class="form-control " name='password' id="<%=alt%>si_password" placeholder="<%=t('password') %>">
 		</div>
