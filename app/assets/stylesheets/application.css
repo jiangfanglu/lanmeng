@@ -25,3 +25,5 @@ div.tagsinput div { display:block; float: left; }
 .page-header{color:#999;}
 .game{padding:10px 0px;border-bottom:1px solid #eee;}
 .logo{color: #fff!important;}
+.errorborder{border: 1px solid red!important;}
+.input-group-addon{width:90px;}

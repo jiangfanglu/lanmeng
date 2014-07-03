@@ -3,7 +3,7 @@
 <%if current_user.is_player? %>
   <li class=" <%= 'active' if params[:controller] == "players" && params[:action] == 'show' %>"><a href="/players/<%=current_user.player.id%>">我的球员资料</a></li>
   <%if current_user.player.owns_team? %>
-    <li class=" <%= 'active' if params[:controller] == "teams" && params[:action] == 'captain_teams' %>"><a href="/teams/captain_teams/0">我创建的球队</a></li>
+    <li class=" <%= 'active' if params[:controller] == "teams" && params[:action] == 'captain_teams' %>"><a href="/teams/captain_teams/0">我创建的球队<%=join_team_requests("pull-right")%></a></li>
   <%else%>
    <li class=" <%= 'active' if params[:controller] == "teams" && params[:action] == 'new' %>"><a href="/teams/new">创建球队</a></li>
   <%end%>

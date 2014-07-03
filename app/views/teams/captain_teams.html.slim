@@ -35,9 +35,12 @@ div class="btn-group"
 	  		| 招募队员
   	- unless @team.players.size >= MAX_TEAM_MEMBER
 		a href="#team_application" class="btn btn-default"
-	  		| 入队申请 (
-	  		= @applications.size 
-	  		| )
+	  		| 入队申请 
+	  		- if @applications.size < 1 
+	  			| 0
+	  		- else
+	  			span class="badge"
+	  				= @applications.size 
    	a href="#team_blog" class="btn btn-default"
   		| 发布球队公告
 

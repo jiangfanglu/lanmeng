@@ -1,4 +1,4 @@
-<div class="alert hide" id="signupformalert">
+<div class="alert alert-warning hide" id="signupformalert">
   <div class="container alerttext"><%=t :missing_input %></div>
 </div>
 <%= form_tag({:controller=>'user',:action=>'create'},{:id=>'signup_form',:method=>"post"}) do -%>
@@ -6,7 +6,7 @@
 	<div class="input-group">
 		<span class="input-group-addon"><%=t('username') %> *</span>
   <input type="text" class="form-control " id="username" name="post[username]" placeholder="<%=t('enter')+t('username') %>" data-task="checkemail" />
-  <span class="input-icon hide"><span class="glyphicon" style="color:red;"></span></span>
+  <!-- <span class="input-icon hide"><span class="glyphicon" style="color:red;"></span></span> -->
   </div>
 </div>
 
@@ -14,7 +14,7 @@
 	<div class="input-group">
 	<span class="input-group-addon"><%=t('email') %> *</span>
   <input type="text" class="form-control " id="email" name="post[email]" placeholder="<%=t('enter')+t('email') %>" data-task="checkemail" />
-  <span class="input-icon hide"><span class="glyphicon" style="color:red;"></span></span>
+  <!-- <span class="input-icon hide"><span class="glyphicon" style="color:red;"></span></span> -->
   </div>
 </div>
 
@@ -22,14 +22,14 @@
 	<div class="input-group">
 	<span class="input-group-addon"><%=t('password') %> *</span>
   <input type="password" class="form-control " id="post_password" name="post[password]" placeholder="<%=t('enter')+t('password') %>" />
-  <span class="input-icon hide"><span class="glyphicon" style="color:red;"></span></span>
+  <!-- <span class="input-icon hide"><span class="glyphicon" style="color:red;"></span></span> -->
   </div>
 </div>
 <div class="form-group">
 	<div class="input-group">
 	<span class="input-group-addon"><%=t('retype_password') %> *</span>
   <input type="password" class="form-control " id="retype_password" name="post[retype_password]" placeholder="<%=t('retype_password') %>" />
-  <span class="input-icon hide"><span class="glyphicon" style="color:red;"></span></span>
+  <!-- <span class="input-icon hide"><span class="glyphicon" style="color:red;"></span></span> -->
 </div>
 </div>
 
@@ -148,13 +148,15 @@
 		if(!$("#signupformalert").hasClass('hide')){
 			$("#signupformalert").addClass('hide');
 		}
-		obj.siblings('.input-icon').removeClass('hide');
-		obj.siblings('.input-icon').children('.glyphicon').removeClass("glyphicon-remove").addClass("glyphicon-ok");
+		obj.parent(".input-group").removeClass('errorborder');
+		// obj.siblings('.input-icon').removeClass('hide');
+		// obj.siblings('.input-icon').children('.glyphicon').removeClass("glyphicon-remove").addClass("glyphicon-ok");
 		//obj.siblings('.glyphicon').removeClass('hide').removeClass("glyphicon-remove").addClass("glyphicon-ok");
 	}
 	var shownotok = function(obj){
-		obj.siblings('.input-icon').removeClass('hide');
-		obj.siblings('.input-icon').children('.glyphicon').removeClass("glyphicon-ok").addClass("glyphicon-remove");
+		obj.parent(".input-group").addClass('errorborder');
+		// obj.siblings('.input-icon').removeClass('hide');
+		// obj.siblings('.input-icon').children('.glyphicon').removeClass("glyphicon-ok").addClass("glyphicon-remove");
 		//obj.siblings('.glyphicon').removeClass('hide').removeClass("glyphicon-ok").addClass("glyphicon-remove");
 	}
 	// $(':checkbox').checkbox('toggle');

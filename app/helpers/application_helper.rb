@@ -7,6 +7,21 @@ module ApplicationHelper
 		cookies[:user_city]
 	end
 
+	def player_tournaments
+		return [] if current_user.player.blank? || current_user.player.teams.size < 1
+		return current_user.player.teams.collect{|t| t.tournaments.first}.uniq
+	end
+
+	def join_team_requests position
+		if current_user.is_player?
+			if current_user.player.owns_team?
+				cpteam = Team.find_by_captain_player_id  current_user.player.id
+				ta = TeamApplication.includes(:user).where("applied_team_id = ? and status = 0",cpteam.id ) if cpteam
+				return (ta.size < 1 ? "" : "<span class='badge #{position}'>#{ta.size}</span>".html_safe) if cpteam
+			end
+		end
+	end
+
 	def current_city_name
 		City.find(cookies[:user_city]).name
 	end

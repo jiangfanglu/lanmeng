@@ -8,8 +8,8 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand logo" href="/" style="margin-top:-10px;">
-      <img src="/assets/wlq_logo.png" class="img-resposnive" style="height:40px;"/>
+    <a class="navbar-brand logo" href="/" style="margin-top:-5px;">
+      <img src="/assets/wlq_logo.png" class="img-resposnive" style="height:30px;"/>
     </a>
   </div>
 
@@ -43,7 +43,7 @@
      
         <%if current_user %>
          <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%=current_user.username %> <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%=join_team_requests("")%>&nbsp;&nbsp;<%=current_user.username %> <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="/user">用户中心</a></li>
             <li class="divider"></li>
@@ -52,7 +52,7 @@
               <li><a href="/players/<%=current_user.player.id%>">我的球员资料</a></li>
               <li class="divider"></li>
               <%if current_user.player.owns_team? %>
-                <li><a href="/teams/captain_teams/0">我创建的球队</a></li>
+                <li><a href="/teams/captain_teams/0">我创建的球队<%=join_team_requests("pull-right")%></a></li>
               <%else%>
                <li><a href="/teams/new">创建球队</a></li>
               <%end%>
@@ -83,7 +83,24 @@
         <% if current_city.blank? %>
           <a href="/">[选择赛区]</a>
         <%else%>
-          <a href="/tournament"><%=current_city_name%>赛区联赛</a>
+            <%if current_user %>
+                <% usr_tour_ids = player_tournaments %>
+                <% if player_tournaments.size < 1 %>
+                    <a href="/tournament">我的赛区联赛</a>
+                <% else %>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">我的赛区联赛<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <%player_tournaments.each do |tour|%>
+                          <li><a href="/home/tournament/<%=tour.id%>"><%=tour.name%>联赛</a></li>
+                      <%end%>
+                      <li class="divider"></li>
+                      <li><a href="/tournament"><%= City.find(current_city).name %>大赛区</a></li>
+                    </ul>
+
+                <% end %>
+            <%else%>
+                <a href="/tournament">我的赛区联赛</a>
+            <%end%>
         <% end %>
       </li>
       
