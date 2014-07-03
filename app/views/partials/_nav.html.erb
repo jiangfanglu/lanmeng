@@ -94,12 +94,12 @@
                           <li><a href="/home/tournament/<%=tour.id%>"><%=tour.name%>联赛</a></li>
                       <%end%>
                       <li class="divider"></li>
-                      <li><a href="/tournament"><%= City.find(current_city).name %>大赛区</a></li>
+                      <li><a href="/tournament"><%= current_city_name %>大赛区</a></li>
                     </ul>
 
                 <% end %>
             <%else%>
-                <a href="/tournament">我的赛区联赛</a>
+                <a href="/tournament"><%= current_city_name %>大赛区</a>
             <%end%>
         <% end %>
       </li>
