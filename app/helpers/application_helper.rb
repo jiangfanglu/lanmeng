@@ -12,14 +12,14 @@ module ApplicationHelper
 		return current_user.player.teams.collect{|t| t.tournaments.first}.uniq
 	end
 
-	def join_team_requests position
-		if current_user.is_player?
-			if current_user.player.owns_team?
-				cpteam = Team.find_by_captain_player_id  current_user.player.id
-				ta = TeamApplication.includes(:user).where("applied_team_id = ? and status = 0",cpteam.id ) if cpteam
-				return (ta.size < 1 ? "" : "<span class='badge #{position}'>#{ta.size}</span>".html_safe) if cpteam
-			end
-		end
+	def join_team_requests_number		
+		cpteam = Team.find_by_captain_player_id  current_user.player.id
+		ta = TeamApplication.includes(:user).where("applied_team_id = ? and status = 0",cpteam.id ) if cpteam
+		return ta.size if cpteam
+	end
+
+	def join_team_requests position, number
+		return number < 1 ? "" : "<span class='badge #{position}'>#{number}</span>".html_safe
 	end
 
 	def current_city_name

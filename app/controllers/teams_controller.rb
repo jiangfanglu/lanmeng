@@ -237,7 +237,7 @@ class TeamsController < ApplicationController
       )
     if @team_application.save
        cookies[:team_invited] = nil if cookies[:team_invited]
-      redirect_to controller: 'teams', action: "my_team", id: 0, :applied=>1
+      redirect_to controller: 'teams', action: "my_teams", id: 0, :applied=>1
     end
   end
 
@@ -252,6 +252,11 @@ class TeamsController < ApplicationController
 
   def my_teams
     @teams = current_user.player.teams
+    @team_applications = current_user.team_applications
+    if @team_applications.count > 0
+      @applied_teams = Team.where("id in (?)", @team_applications.collect{|t|t.applied_team_id})
+    end
+
     render layout: 'user'
   end
 end

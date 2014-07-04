@@ -2,7 +2,21 @@ div class="page-header"
 	h3 我参与的球队
 
 - if @teams.size < 1
-	p 暂无球队信息
+	p 暂无已参与球队信息
+
+- if @team_applications.count > 0
+	div class="page-header"
+		h3 您申请的，等待批准加入的球队
+
+	table class="table"
+		- @applied_teams.each do |team|
+			tr
+				td style="width:50px;"
+					img src="#{MEIDIA_SERVER}/#{BUCKET_NAME}/team/#{team.id}/logo/#{team.logo}" class="img-responsive" onerror="this.src='#{SITE_ROOT}/assets/icons/dude.svg'"
+				td 
+					h4 = team.name
+				td = link_to "查看球队", {:action=>"show", :id =>team.id},{:class=>"btn btn-sm btn-default"}
+
 
 div class="row"
 	- @teams.each do |team|
