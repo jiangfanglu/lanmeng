@@ -22,7 +22,6 @@ class ApplicationController < ActionController::Base
         @team_requests = 0
       end
     end
-  else
-    @team_requests = 0
   end
+  
 end
