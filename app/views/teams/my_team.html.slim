@@ -45,6 +45,9 @@ ol class="breadcrumb"
 								== render :partial => "players/avartar", :locals => {:user_id=>player.user.id, :player_id=>player.id}
 								div class="caption text-center"
 									= player.alias
+									br
+									| 电话: 
+									= player.user.telephone
 
 		div class="col-lg-6"
 			
